@@ -7,14 +7,22 @@ import FormInput from '../components/FormInput'
 
 import { Icon } from '@rneui/themed'
 import SocialButton from '../components/SocialButton'
+import TextButton from '../components/TextButton'
+import { LoginScreenProps } from '../types'
+import Title from '../components/Title'
+import TextSeparation from '../components/TextSeparation'
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}: LoginScreenProps) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     return (
         <View style={styles.container}>
+            <Title
+                label='Se connecter'
+                color={Colors.light.tint}
+            />
             <FormInput
                 labelValue={email}
                 placeholder='E-mail'
@@ -51,6 +59,13 @@ const LoginScreen = () => {
                 color={Colors.light.tint}
                 onPress={() => alert('Vous voulez vous connecter!')}
             />
+            <TextButton
+                title='Mot de passe oublié?'
+                color={Colors.light.tint}
+            />
+            <TextSeparation 
+                label='OU'
+            />
             <View style={styles.socialMediaButtonList}>
                 <SocialButton 
                     iconComponent={
@@ -83,6 +98,11 @@ const LoginScreen = () => {
                     }
                 />
             </View>
+            <TextButton
+                title='Pas de compte? Créez en un ici'
+                color={Colors.light.tint}
+                onPress={() => navigation.navigate("SignUp")}
+            />
         </View>
     )
 }
