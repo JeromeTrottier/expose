@@ -5,7 +5,7 @@ import AuthStack from './AuthStack'
 const Routes = () => {
   return (
     <NavigationContainer>
-        <AuthStack/>
+        <AuthStack />
     </NavigationContainer>
   )
 }
