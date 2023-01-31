@@ -11,6 +11,7 @@ import TextButton from '../components/TextButton'
 import { LoginScreenProps } from '../types'
 import Title from '../components/Title'
 import TextSeparation from '../components/TextSeparation'
+import { signInWithFacebook } from '../models/user-model'
 
 const LoginScreen = ({navigation}: LoginScreenProps) => {
 
@@ -86,16 +87,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
                             color={'#1877f2'}
                         />
                     }
-                />
-                <SocialButton 
-                    iconComponent={
-                        <Icon
-                            name='twitter'
-                            type='font-awesome'
-                            reverse={true}
-                            color={'#1da1f2'}
-                        />
-                    }
+                    onPress={signInWithFacebook}
                 />
             </View>
             <TextButton
@@ -119,4 +111,4 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     }
-})
+});

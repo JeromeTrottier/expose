@@ -8,6 +8,5 @@ export default function App() {
     <SafeAreaProvider>
        <Providers/>  
     </SafeAreaProvider>
-    
   )
 }

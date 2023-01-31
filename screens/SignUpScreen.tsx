@@ -5,6 +5,8 @@ import { Icon } from '@rneui/themed'
 import Colors from '../constants/Colors'
 import FormInput from '../components/FormInput'
 import FormButton from '../components/FormButton'
+import TextSeparation from '../components/TextSeparation'
+import SocialButton from '../components/SocialButton'
 
 const SignUpScreen = () => {
 
@@ -52,6 +54,31 @@ const SignUpScreen = () => {
             title='Enregistrer'
             color={Colors.light.tint}
         />
+        <TextSeparation 
+                label='OU'
+            />
+            <View style={styles.socialMediaButtonList}>
+                <SocialButton 
+                    iconComponent={
+                        <Icon
+                            name='google'
+                            type='font-awesome'
+                            reverse={true}
+                            color={'#da483b'}
+                        />
+                    }
+                />
+                <SocialButton 
+                    iconComponent={
+                        <Icon
+                            name='facebook'
+                            type='font-awesome'
+                            reverse={true}
+                            color={'#1877f2'}
+                        />
+                    }
+                />
+            </View>
         </View>
     )
 }
@@ -64,4 +91,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    socialMediaButtonList: {
+        display: 'flex',
+        flexDirection: 'row',
+    }
 })
