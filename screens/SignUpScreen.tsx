@@ -7,6 +7,7 @@ import FormInput from '../components/FormInput'
 import FormButton from '../components/FormButton'
 import TextSeparation from '../components/TextSeparation'
 import SocialButton from '../components/SocialButton'
+import { createAccountWithLoginInformation, signInWithFacebook } from '../models/user-model'
 
 const SignUpScreen = () => {
 
@@ -53,30 +54,22 @@ const SignUpScreen = () => {
         <FormButton
             title='Enregistrer'
             color={Colors.light.tint}
+            onPress={() => createAccountWithLoginInformation(email, password)}
         />
         <TextSeparation 
                 label='OU'
             />
             <View style={styles.socialMediaButtonList}>
-                <SocialButton 
-                    iconComponent={
-                        <Icon
-                            name='google'
-                            type='font-awesome'
-                            reverse={true}
-                            color={'#da483b'}
-                        />
-                    }
-                />
-                <SocialButton 
+               <SocialButton 
                     iconComponent={
                         <Icon
                             name='facebook'
                             type='font-awesome'
-                            reverse={true}
-                            color={'#1877f2'}
+                            color='white'
                         />
                     }
+                    onPress={signInWithFacebook}
+                    color={'#1877f2'}
                 />
             </View>
         </View>

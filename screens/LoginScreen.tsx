@@ -11,13 +11,14 @@ import TextButton from '../components/TextButton'
 import { LoginScreenProps } from '../types'
 import Title from '../components/Title'
 import TextSeparation from '../components/TextSeparation'
-import { signInWithFacebook } from '../models/user-model'
+import { signInWithFacebook, signInWithLoginInformation } from '../models/user-model'
+import useAuthentification from '../hooks/useAuthentification'
 
 const LoginScreen = ({navigation}: LoginScreenProps) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    
     return (
         <View style={styles.container}>
             <Title
@@ -58,7 +59,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
             <FormButton
                 title='Se connecter'
                 color={Colors.light.tint}
-                onPress={() => alert('Vous voulez vous connecter!')}
+                onPress={() => signInWithLoginInformation(email, password)}
             />
             <TextButton
                 title='Mot de passe oublié?'
@@ -71,23 +72,13 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
                 <SocialButton 
                     iconComponent={
                         <Icon
-                            name='google'
-                            type='font-awesome'
-                            reverse={true}
-                            color={'#da483b'}
-                        />
-                    }
-                />
-                <SocialButton 
-                    iconComponent={
-                        <Icon
                             name='facebook'
                             type='font-awesome'
-                            reverse={true}
-                            color={'#1877f2'}
+                            color='white'
                         />
                     }
                     onPress={signInWithFacebook}
+                    color={'#1877f2'}
                 />
             </View>
             <TextButton

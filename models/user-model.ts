@@ -6,6 +6,9 @@ import {
     OAuthCredential,
     UserCredential,
     Auth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
 } from 'firebase/auth'
 import {
     LoginManager,
@@ -26,10 +29,31 @@ export const signInWithFacebook = async () => {
 
     const facebookCredential: OAuthCredential = FacebookAuthProvider.credential(data.accessToken);
     const user: UserCredential = await signInWithCredential(firebaseAuth, facebookCredential);
-    console.log(user);
-    
+    console.log('Signed in with Facebook Credentials : ', user);
 }
 
-export const signInWithGoogle = async () => {
-    
+export const createAccountWithLoginInformation= async (email: string, password: string) => {
+
+    const firebaseAuth: Auth = getAuth(firebaseApp);
+
+    const userCredentials: UserCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+    const user = userCredentials.user;
+
+    console.log('Created account with : ', user.email);
+}
+
+export const signInWithLoginInformation = async (email: string, password: string) => {
+
+    const firebaseAuth: Auth = getAuth(firebaseApp);
+
+    const userCredentials: UserCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
+    const user = userCredentials.user;
+    console.log('Logged in with : ', user.email);
+}
+
+export const signOutUser = async () => {
+
+    const firebaseAuth: Auth = getAuth(firebaseApp);
+
+    await signOut(firebaseAuth);
 }
