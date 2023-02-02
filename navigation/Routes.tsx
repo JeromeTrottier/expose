@@ -4,6 +4,7 @@ import AuthStack from './AuthStack'
 import useAuthentification from '../hooks/useAuthentification'
 import { User } from 'firebase/auth'
 import AppStack from './AppStack'
+import { UserContext } from '../contexts/userContext'
 
 const Routes = () => {
 
@@ -15,11 +16,12 @@ const Routes = () => {
     <NavigationContainer>
       {
         user ?
-        <AppStack />
+        <UserContext.Provider value={user}>
+          <AppStack />
+        </UserContext.Provider>
         :
         <AuthStack />
       }
-        
     </NavigationContainer>
   )
 }
