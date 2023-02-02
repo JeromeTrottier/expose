@@ -13,17 +13,22 @@ import Title from '../components/Title'
 import TextSeparation from '../components/TextSeparation'
 import { signInWithFacebook, signInWithLoginInformation } from '../models/user-model'
 import useAuthentification from '../hooks/useAuthentification'
+import ErrorMessage from '../components/ErrorMessage'
 
 const LoginScreen = ({navigation}: LoginScreenProps) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     
     return (
         <View style={styles.container}>
             <Title
                 label='Se connecter'
                 color={Colors.light.tint}
+            />
+            <ErrorMessage 
+                message={error}
             />
             <FormInput
                 labelValue={email}
@@ -59,7 +64,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
             <FormButton
                 title='Se connecter'
                 color={Colors.light.tint}
-                onPress={() => signInWithLoginInformation(email, password)}
+                onPress={() => signInWithLoginInformation(email, password, setError)}
             />
             <TextButton
                 title='Mot de passe oublié?'

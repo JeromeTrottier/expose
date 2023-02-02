@@ -14,6 +14,7 @@ import {
     LoginManager,
     AccessToken,
 } from 'react-native-fbsdk-next'
+import { FirebaseError } from "firebase/app";
 
 export const signInWithFacebook = async () => {
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
@@ -42,13 +43,28 @@ export const createAccountWithLoginInformation= async (email: string, password: 
     console.log('Created account with : ', user.email);
 }
 
-export const signInWithLoginInformation = async (email: string, password: string) => {
+export const signInWithLoginInformation = async (email: string, password: string, errorModulator?: React.Dispatch<React.SetStateAction<string>>) => {
 
     const firebaseAuth: Auth = getAuth(firebaseApp);
 
-    const userCredentials: UserCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
-    const user = userCredentials.user;
-    console.log('Logged in with : ', user.email);
+    try {
+        const userCredentials: UserCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
+        const user = userCredentials.user;
+        console.log('Logged in with : ', user.email);
+    } catch (e: any) {
+        if (e instanceof FirebaseError) {
+            switch (e.code) {
+                case "auth/invalid-email":
+                    if (errorModulator) {
+                        errorModulator('Attention: Email ou mot de passe invalide.')
+                    }
+                    break;
+                default: 
+                    console.log(e.message);
+                    break;
+            }
+        }
+    }
 }
 
 export const signOutUser = async () => {
