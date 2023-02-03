@@ -1,4 +1,4 @@
-import { firebaseApp } from "../firebase"
+import { bdFirestore, firebaseApp } from "../firebase"
 import {
     getAuth,
     FacebookAuthProvider,
@@ -15,6 +15,7 @@ import {
     AccessToken,
 } from 'react-native-fbsdk-next'
 import { FirebaseError } from "firebase/app";
+import { doc, setDoc } from "firebase/firestore";
 
 export const signInWithFacebook = async () => {
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
@@ -72,4 +73,12 @@ export const signOutUser = async () => {
     const firebaseAuth: Auth = getAuth(firebaseApp);
 
     await signOut(firebaseAuth);
+}
+
+export const createUserInDB = async (userID: string, displayName: string | null, email: string | null) => {
+    await setDoc(
+        doc(bdFirestore, "users", userID),
+        {displayName: displayName, email: email},
+        {merge: true}
+    );
 }
