@@ -2,10 +2,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { HomeScreenProps, ProfileScreenProps, RootTabParamList } from '../types';
+import { HomeScreenProps, ProfileScreenProps, RootTabParamList, SearchScreenProps } from '../types';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { Icon } from '@rneui/themed';
+import SearchScreen from '../screens/SearchScreen';
 
 const Stack = createStackNavigator<RootTabParamList>();
 
@@ -25,6 +26,16 @@ const AppStack = () => {
             tabBarShowLabel: false,
             tabBarIcon: ({color, size}) => (
               <Icon name='home' color={color} size={30}/>
+            ),
+          })}
+        />
+        <TabStack.Screen 
+          name='Search' 
+          component={SearchScreen}
+          options={({ navigation }: SearchScreenProps) => ({
+            tabBarShowLabel: false,
+            tabBarIcon: ({color, size}) => (
+              <Icon name='search' color={color} size={30}/>
             ),
           })}
         />

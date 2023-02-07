@@ -10,7 +10,6 @@ export default function useFirebaseStorageImage(imageID: string) {
 
       const setImageURL = async () => {
         const imgRef = ref(storageFirebase, imageID);
-        console.log(imgRef);
         
         const imgURL = await getDownloadURL(imgRef);
         setURL(imgURL);
@@ -18,6 +17,5 @@ export default function useFirebaseStorageImage(imageID: string) {
 
       if (URL == undefined) {setImageURL();}
     },[]);
-
     return URL;
 }

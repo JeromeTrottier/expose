@@ -11,6 +11,8 @@ import {
     signOut,
     User,
     updateProfile,
+    getAdditionalUserInfo,
+    updateCurrentUser,
 } from 'firebase/auth'
 import {
     LoginManager,
@@ -36,8 +38,24 @@ export const signInWithFacebook = async () => {
     const firebaseAuth: Auth = getAuth(firebaseApp);
 
     const facebookCredential: OAuthCredential = FacebookAuthProvider.credential(data.accessToken);
-    const user: UserCredential = await signInWithCredential(firebaseAuth, facebookCredential);
-    console.log('Signed in with Facebook Credentials : ', user);
+    const userCredentials: UserCredential = await signInWithCredential(firebaseAuth, facebookCredential);
+    console.log('Signed in with Facebook Credentials : ', userCredentials);
+
+    const additionalUserInfo = await getAdditionalUserInfo(userCredentials);
+
+    if (additionalUserInfo?.isNewUser) {
+        console.log("creating new user....");
+        
+        await createUserInDB(userCredentials.user, {
+            username: makeUsername(userCredentials.user.displayName),
+            displayName: userCredentials.user.displayName,
+            email: userCredentials.user.email,
+            profilePictureURI: userCredentials.user.photoURL,
+        });
+
+        updateCurrentUser(firebaseAuth, userCredentials.user);
+    }
+    
 }
 
 export const createAccountWithLoginInformation= async (exposeUser: ExposeUser) => {
@@ -107,7 +125,7 @@ export const createUserInDB = async (user: User, expoUser: DBExposeUser) => {
         {merge: true}
     );
 
-    updateUserInformation(user, {
+    await updateUserInformation(user, {
         displayName: expoUser.displayName,
         photoURL: `images/profilePictures/${profilePictureID}.jpg`
     })
@@ -124,9 +142,18 @@ export const getUserFromDB = async (userID: string) => {
 
     if (userSnap.exists()) {
         console.log("User data : ", userSnap.data());
-        return userSnap.data();
+        const userData = userSnap.data();
+        return userData;
     } else {
         console.error("No user with this ID");
         return undefined;
     }
+}
+
+const makeUsername = (displayName: string | null) => {
+    if (typeof displayName === "string") {
+        const username = displayName.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "_") + Math.floor(Math.random()*100);
+        return username;
+    }
+    return null;
 }

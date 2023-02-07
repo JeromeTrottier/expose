@@ -18,10 +18,12 @@ export type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'Login
 export type RootTabParamList = {
     Home: undefined;
     Profile: undefined;
+    Search: undefined;
 }
 
 export type HomeScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
 export type ProfileScreenProps = BottomTabScreenProps<RootTabParamList, 'Profile'>;
+export type SearchScreenProps = BottomTabScreenProps<RootTabParamList, 'Search'>;
 
 export type ExposeUser = {
     displayName: string;
