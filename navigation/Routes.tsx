@@ -5,18 +5,19 @@ import useAuthentification from '../hooks/useAuthentification'
 import { User } from 'firebase/auth'
 import AppStack from './AppStack'
 import { UserContext } from '../contexts/userContext'
+import { DocumentData } from 'firebase/firestore'
 
 const Routes = () => {
 
-  const [user, setUser] = useState<User>();
+  const [userData, setUserData] = useState<DocumentData | undefined>();
 
-  const auth = useAuthentification(setUser);
+  const auth = useAuthentification(setUserData);
   
   return (
     <NavigationContainer>
       {
-        user ?
-        <UserContext.Provider value={user}>
+        userData ?
+        <UserContext.Provider value={userData}>
           <AppStack />
         </UserContext.Provider>
         :

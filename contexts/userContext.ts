@@ -1,4 +1,4 @@
-import { User } from "firebase/auth";
+import { DocumentData } from "firebase/firestore";
 import { createContext } from "react";
 
-export const UserContext = createContext<User | null>(null);
+export const UserContext = createContext<DocumentData | null>(null);
