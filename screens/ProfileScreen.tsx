@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useContext, useState } from 'react'
-import { ProfileScreenProps } from '../types'
+import { ProfileTabScreenProps } from '../types'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { UserContext } from '../contexts/userContext'
 import useFirebaseStorageImage from '../hooks/useFirebaseStorageImage'
 
-const ProfileScreen = ({navigation}: ProfileScreenProps) => {
+const ProfileScreen = ({navigation}: ProfileTabScreenProps) => {
 
     const user = useContext(UserContext);
     

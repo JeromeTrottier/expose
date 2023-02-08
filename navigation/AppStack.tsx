@@ -2,11 +2,11 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { HomeScreenProps, ProfileScreenProps, RootTabParamList, SearchScreenProps } from '../types';
+import { HomeTabScreenProps, ProfileTabScreenProps, RootTabParamList, SearchTabScreenProps } from '../types';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { Icon } from '@rneui/themed';
-import SearchScreen from '../screens/SearchScreen';
+import SearchStack from './SearchStack';
 
 const Stack = createStackNavigator<RootTabParamList>();
 
@@ -22,7 +22,7 @@ const AppStack = () => {
         <TabStack.Screen 
           name='Home' 
           component={HomeScreen}
-          options={({ navigation }: HomeScreenProps) => ({
+          options={({ navigation }: HomeTabScreenProps) => ({
             tabBarShowLabel: false,
             tabBarIcon: ({color, size}) => (
               <Icon name='home' color={color} size={30}/>
@@ -31,8 +31,8 @@ const AppStack = () => {
         />
         <TabStack.Screen 
           name='Search' 
-          component={SearchScreen}
-          options={({ navigation }: SearchScreenProps) => ({
+          component={SearchStack}
+          options={({ navigation }: SearchTabScreenProps) => ({
             tabBarShowLabel: false,
             tabBarIcon: ({color, size}) => (
               <Icon name='search' color={color} size={30}/>
@@ -42,7 +42,7 @@ const AppStack = () => {
         <TabStack.Screen 
           name='Profile' 
           component={ProfileScreen} 
-          options={({ navigation }: ProfileScreenProps) => ({
+          options={({ navigation }: ProfileTabScreenProps) => ({
             tabBarShowLabel: false,
             tabBarIcon: ({color, size}) => (
               <Icon name='user-alt' type='font-awesome-5' color={color}/>

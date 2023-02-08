@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { storageFirebase } from '../firebase';
 
 export default function useFirebaseStorageImage(imageID: string) {
-    const [URL, setURL] = useState<null | string>(null);
+    const [URL, setURL] = useState<undefined | string>(undefined);
 
     useEffect(() => {
 
