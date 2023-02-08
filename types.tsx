@@ -49,5 +49,5 @@ export type DBExposeUser = {
     displayName?: string | null;
     username?: string |null;
     email?: string | null;
-    profilePictureURI?: string |null;
+    profilePictureID: string | null;
 }

@@ -50,7 +50,7 @@ export const signInWithFacebook = async () => {
             username: makeUsername(userCredentials.user.displayName),
             displayName: userCredentials.user.displayName,
             email: userCredentials.user.email,
-            profilePictureURI: userCredentials.user.photoURL,
+            profilePictureID: userCredentials.user.photoURL,
         });
 
         updateCurrentUser(firebaseAuth, userCredentials.user);
@@ -69,7 +69,7 @@ export const createAccountWithLoginInformation= async (exposeUser: ExposeUser) =
         username: exposeUser.username,
         displayName: exposeUser.displayName,
         email: exposeUser.email,
-        profilePictureURI: exposeUser.profilePictureURI,
+        profilePictureID: exposeUser.profilePictureURI,
     });
 
     console.log('Created account with : ', user.email);
@@ -110,8 +110,8 @@ export const createUserInDB = async (user: User, expoUser: DBExposeUser) => {
 
     const profilePictureID: string = uuidv4();
 
-    if (expoUser.profilePictureURI) {
-        await uploadImage(expoUser.profilePictureURI, profilePictureID);
+    if (expoUser.profilePictureID) {
+        await uploadImage(expoUser.profilePictureID, profilePictureID);
     }
 
     await setDoc(
@@ -141,7 +141,6 @@ export const getUserFromDB = async (userID: string) => {
     const userSnap = await getDoc(userRef);
 
     if (userSnap.exists()) {
-        console.log("User data : ", userSnap.data());
         const userData = userSnap.data();
         return userData;
     } else {
