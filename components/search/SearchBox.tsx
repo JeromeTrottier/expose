@@ -7,14 +7,13 @@ import { SearchBoxProps } from "react-instantsearch-dom";
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: "#252b33"
   },
   input: {
     height: 48,
     padding: 12,
     fontSize: 16,
     backgroundColor: "#fff",
-    borderRadius: 4,
+    borderRadius: 25,
     borderWidth: 1,
     borderColor: "#ddd",
     shadowColor: "#000",
@@ -30,7 +29,7 @@ const SearchBox = ({ currentRefinement, refine }: any) => (
       style={styles.input}
       onChangeText={(value) => refine(value)}
       value={currentRefinement}
-      placeholder=""
+      placeholder="Rechercher une personne..."
     />
   </View>
 );

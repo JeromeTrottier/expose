@@ -10,7 +10,7 @@ const Stack = createStackNavigator<SearchStackParamList>();
 const SearchStack = () => {
   return (
     <Stack.Navigator>
-        <Stack.Screen name='Search' component={SearchScreen}/>
+        <Stack.Screen name='Search' component={SearchScreen} options={{headerShown: false}}/>
         <Stack.Screen name='OtherProfile' component={OtherProfileScreen}/>
     </Stack.Navigator>
   )

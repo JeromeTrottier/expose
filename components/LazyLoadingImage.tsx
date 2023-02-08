@@ -1,4 +1,4 @@
-import { StyleSheet, Image, View, StyleProp, ImageStyle } from 'react-native'
+import { StyleSheet, Image, View } from 'react-native'
 import React, { useState } from 'react'
 import { Skeleton } from '@rneui/base';
 
