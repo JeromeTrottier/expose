@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connectInfiniteHits } from "react-instantsearch-native";
 import UserResult from "./UserResult";
 
+
 const InfiniteHits = ({ hits, hasMore, refineNext }: any) => (
   <FlatList
     data={hits}
@@ -11,7 +12,12 @@ const InfiniteHits = ({ hits, hasMore, refineNext }: any) => (
     ItemSeparatorComponent={() => <View style={styles.separator} />}
     onEndReached={() => hasMore && refineNext()}
     renderItem={({ item }) => (
-      <UserResult displayName={item.displayName} />
+        <UserResult 
+            displayName={item.displayName} 
+            profilePictureID={item.profilePictureID} 
+            username={item.username}
+            userID={item.objectID}
+        />
     )}
   />
 );
@@ -34,6 +40,6 @@ const styles = StyleSheet.create({
       color: "black",
       fontWeight: "bold"
     }
-  });
+});
 
 export default connectInfiniteHits(InfiniteHits);

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View} from 'react-native'
 import React from 'react'
-import { HomeScreenProps } from '../types'
+import { HomeTabScreenProps } from '../types'
 import FormButton from '../components/FormButton'
 import { signOutUser } from '../models/user-model'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 
-const HomeScreen = ({navigation}: HomeScreenProps) => {
+const HomeScreen = ({navigation}: HomeTabScreenProps) => {
   return (
     <SafeAreaView>
         <Text>Home</Text>

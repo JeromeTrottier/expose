@@ -3,7 +3,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native'
 import { ExoticComponent } from "react";
 
-//Authentification
+//Authentification Stack
 export type AuthStackParamList = {
     Onboarding: undefined;
     Login: undefined;
@@ -14,17 +14,29 @@ export type OnboardingScreenProps = NativeStackScreenProps<AuthStackParamList, '
 export type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'Login'>;
 
 
-//App
+//App Stack
 export type RootTabParamList = {
     Home: undefined;
     Profile: undefined;
     Search: undefined;
 }
 
-export type HomeScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
-export type ProfileScreenProps = BottomTabScreenProps<RootTabParamList, 'Profile'>;
-export type SearchScreenProps = BottomTabScreenProps<RootTabParamList, 'Search'>;
+export type HomeTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
+export type ProfileTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Profile'>;
+export type SearchTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Search'>;
 
+
+//Search Stack
+export type SearchStackParamList = {
+    Search: undefined;
+    OtherProfile: {userID: string};
+}
+
+export type SearchScreenProps = NativeStackScreenProps<SearchStackParamList, 'Search'>;
+export type OtherProfileScreenProps = NativeStackScreenProps<SearchStackParamList, 'OtherProfile'>;
+
+
+// Users
 export type ExposeUser = {
     displayName: string;
     username: string;
@@ -37,5 +49,5 @@ export type DBExposeUser = {
     displayName?: string | null;
     username?: string |null;
     email?: string | null;
-    profilePictureURI?: string |null;
+    profilePictureID: string | null;
 }
