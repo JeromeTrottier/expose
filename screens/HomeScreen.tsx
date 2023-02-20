@@ -3,21 +3,16 @@ import React from 'react'
 import { HomeTabScreenProps } from '../types'
 import FormButton from '../components/FormButton'
 import { signOutUser } from '../models/user-model'
-import { SafeAreaView } from 'react-native-safe-area-context'
-
-
-
 
 const HomeScreen = ({navigation}: HomeTabScreenProps) => {
   return (
-    <SafeAreaView>
-        <Text>Home</Text>
+    <View style={styles.container}>
         <FormButton
           title='Déconnecter'
           color='black'
           onPress={signOutUser}
         />
-    </SafeAreaView>
+    </View>
   )
 }
 

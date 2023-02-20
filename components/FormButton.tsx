@@ -24,8 +24,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 10,
         width: windowWidth - 100,
-        height: windowHeight / 15,
-        borderRadius: 50
+        height: windowHeight / 11,
+        borderColor: 'black',
+        borderWidth: 2,
+        shadowColor: 'black',
+        shadowOffset: {width: 4, height: 4},
+        shadowOpacity: 1,
+        shadowRadius: 0
     },
     buttonText: {
         fontSize: 18,

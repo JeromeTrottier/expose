@@ -19,8 +19,8 @@ import {
     AccessToken,
 } from 'react-native-fbsdk-next'
 import { FirebaseError } from "firebase/app";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { DBExposeUser, ExposeUser } from "../types";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { DBExposeUser, ExposeUser, DBExposePost, ExposePostForm } from "../types";
 import { uploadImage } from "./image-model";
 import 'react-native-get-random-values';
 import { v4 as uuidv4} from "uuid";
@@ -111,7 +111,7 @@ export const createUserInDB = async (user: User, expoUser: DBExposeUser) => {
     const profilePictureID: string = uuidv4();
 
     if (expoUser.profilePictureID) {
-        await uploadImage(expoUser.profilePictureID, profilePictureID);
+        await uploadImage(expoUser.profilePictureID, profilePictureID, 'profilePictures');
     }
 
     await setDoc(
@@ -132,6 +132,39 @@ export const createUserInDB = async (user: User, expoUser: DBExposeUser) => {
 
 }
 
+export const createPost = async (postInfo: ExposePostForm) => {
+
+    const imageID: string = uuidv4();
+
+    if (postInfo.imageURI) {
+        await uploadImage(postInfo.imageURI, imageID, 'postImages');
+    }
+    
+    await addDoc(
+        collection(bdFirestore, 'posts'),
+        {
+            title: postInfo.title,
+            description: postInfo.description,
+            imageID: imageID,
+            exposerID: postInfo.exposerID,
+            authorID:  postInfo.authorID
+        }
+    ).then(async (data) => {
+        await addDoc(
+            collection(bdFirestore, 'users', postInfo.exposerID, 'posts'),
+            {
+                postID: data.id
+            }
+        );
+        await addDoc(
+            collection(bdFirestore, 'users', postInfo.authorID, 'exposes'),
+            {
+                postID: data.id
+            }
+        );
+    })
+}
+
 export const updateUserInformation = async (user: User, newUserInfo: {displayName?: string | null | undefined, photoURL?: string | null | undefined}) => {
     await updateProfile(user, newUserInfo);
 }
@@ -141,8 +174,15 @@ export const getUserFromDB = async (userID: string) => {
     const userSnap = await getDoc(userRef);
 
     if (userSnap.exists()) {
+        
         const userData = userSnap.data();
-        return userData;
+        const exposeUserData: DBExposeUser = {
+            displayName: userData.displayName,
+            email: userData.email,
+            profilePictureID: userData.profilePictureID,
+            username: userData.username
+        }
+        return exposeUserData;
     } else {
         console.error("No user with this ID");
         return undefined;

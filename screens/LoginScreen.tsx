@@ -12,7 +12,6 @@ import { LoginScreenProps } from '../types'
 import Title from '../components/Title'
 import TextSeparation from '../components/TextSeparation'
 import { signInWithFacebook, signInWithLoginInformation } from '../models/user-model'
-import useAuthentification from '../hooks/useAuthentification'
 import ErrorMessage from '../components/ErrorMessage'
 
 const LoginScreen = ({navigation}: LoginScreenProps) => {
@@ -24,8 +23,8 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
     return (
         <View style={styles.container}>
             <Title
-                label='Se connecter'
-                color={Colors.light.tint}
+                label='Bienvenue sur Expose'
+                color={Colors.light.text}
             />
             <ErrorMessage 
                 message={error}

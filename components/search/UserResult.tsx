@@ -4,6 +4,9 @@ import useFirebaseStorageImage from '../../hooks/useFirebaseStorageImage';
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SearchStackParamList } from "../../types";
+import Colors from '../../constants/Colors';
+import LazyLoadingImage from '../LazyLoadingImage';
+
 
 type NavigationProps = StackNavigationProp<SearchStackParamList>;
 
@@ -27,13 +30,16 @@ const UserResult = ({displayName, profilePictureID, username, userID}: UserResul
         <View style={styles.container}>
             {
                 profilePictureID ? 
-                <Image
-                source={{uri: profilePictureUrl}}
-                style={styles.image}
-                /> :
+                <LazyLoadingImage
+                    profilePictureUrl={profilePictureUrl}
+                    width={75}
+                    height={75}
+                    shadowOffset={3}
+                />
+                 :
                 <></>
             }
-            <View>
+            <View style={{marginLeft: 10}}>
                 <Text style={styles.displayName}>{displayName}</Text>
                 <Text style={styles.username}>{username}</Text>
             </View>
@@ -48,8 +54,17 @@ const styles = StyleSheet.create({
     container: {
         display: "flex",
         flexDirection: "row",
-        padding: 20,
-        alignItems: "center"
+        padding: 10,
+        marginHorizontal: 15,
+        marginVertical: 5,
+        alignItems: "center",
+        borderColor: 'black',
+        borderWidth: 2,
+        shadowOffset: {width: 4, height: 4},
+        shadowColor: 'black',
+        shadowOpacity: 1,
+        shadowRadius: 0,
+        backgroundColor: Colors.light.yellow
     },
     displayName: {
         fontSize: 18,
@@ -57,11 +72,5 @@ const styles = StyleSheet.create({
     },
     username: {
         color: "#222"
-    },
-    image: {
-        width: 50,
-        height: 50,
-        marginRight: 10,
-        borderRadius: 25
     }
 })

@@ -37,11 +37,14 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 10,
         width: windowWidth - 100,
-        height: windowHeight / 15,
+        height: windowHeight / 11,
         backgroundColor: '#fff',
-        borderColor: '#aaa',
-        borderWidth: 1,
-        borderRadius: 50
+        borderColor: 'black',
+        borderWidth: 2,
+        shadowColor: 'black',
+        shadowOffset: {width: 4, height: 4},
+        shadowOpacity: 1,
+        shadowRadius: 0
     },
     inputText: {
         fontSize: 18,

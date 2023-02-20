@@ -2,6 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native'
 import { ExoticComponent } from "react";
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 
 //Authentification Stack
 export type AuthStackParamList = {
@@ -15,15 +16,27 @@ export type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'Login
 
 
 //App Stack
+
+export type RootParamList = {
+    Main: undefined;
+    Modal: {authorID: string | undefined};
+}
+
+export type PostFormScreenProps = NativeStackScreenProps<RootParamList, 'Modal'>;
+
 export type RootTabParamList = {
     Home: undefined;
-    Profile: undefined;
-    Search: undefined;
+    Profile: {userID: string};
+    SearchStack: undefined;
 }
 
 export type HomeTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
-export type ProfileTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Profile'>;
-export type SearchTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Search'>;
+
+export type ProfileScreenProps = CompositeScreenProps<
+    BottomTabScreenProps<RootTabParamList, 'Profile'>,
+    NativeStackScreenProps<SearchStackParamList, 'OtherProfile'>
+>;
+export type SearchTabScreenProps = BottomTabScreenProps<RootTabParamList, 'SearchStack'>;
 
 
 //Search Stack
@@ -33,8 +46,17 @@ export type SearchStackParamList = {
 }
 
 export type SearchScreenProps = NativeStackScreenProps<SearchStackParamList, 'Search'>;
-export type OtherProfileScreenProps = NativeStackScreenProps<SearchStackParamList, 'OtherProfile'>;
+// export type OtherProfileScreenProps = NativeStackScreenProps<SearchStackParamList, 'OtherProfile'>;
 
+
+//Profile Tabs
+export type ProfileTabParamList = {
+    Posts: undefined;
+    Exposes: undefined;
+}
+
+export type PostsTabScreenProps = MaterialTopTabScreenProps<ProfileTabParamList, 'Posts'>;
+export type ExposesTabScreenProps = MaterialTopTabScreenProps<ProfileTabParamList, 'Exposes'>;
 
 // Users
 export type ExposeUser = {
@@ -50,4 +72,20 @@ export type DBExposeUser = {
     username?: string |null;
     email?: string | null;
     profilePictureID: string | null;
+}
+
+export type ExposePostForm = {
+    title: string;
+    description: string;
+    imageURI: string;
+    authorID: string;
+    exposerID: string;
+}
+
+export type DBExposePost = {
+    title: string;
+    description: string;
+    imageID: string;
+    authorID: string;
+    exposerID: string;
 }

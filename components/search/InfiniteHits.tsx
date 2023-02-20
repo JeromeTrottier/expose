@@ -1,15 +1,13 @@
 import React from "react";
-import { StyleSheet, View, FlatList, Text } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import PropTypes from "prop-types";
 import { connectInfiniteHits } from "react-instantsearch-native";
 import UserResult from "./UserResult";
-
 
 const InfiniteHits = ({ hits, hasMore, refineNext }: any) => (
   <FlatList
     data={hits}
     keyExtractor={(item) => item.objectID}
-    ItemSeparatorComponent={() => <View style={styles.separator} />}
     onEndReached={() => hasMore && refineNext()}
     renderItem={({ item }) => (
         <UserResult 

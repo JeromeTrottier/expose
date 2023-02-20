@@ -1,11 +1,26 @@
-import { StyleSheet, Text, View } from 'react-native'
+import {StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import React from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const InteractionButton = () => {
+type InteractionButtonProps = {
+  label: string;
+  padding?: number;
+  margin?: number;
+}
+
+const InteractionButton = ({label, padding=15, margin=5, ...rest}: InteractionButtonProps & TouchableOpacityProps) => {
+
   return (
-    <TouchableOpacity style={styles.container}>
-        <Text style={styles.text}>Expose</Text>
+    <TouchableOpacity 
+      style={[
+        styles.container, 
+        {
+          paddingHorizontal: padding, 
+          marginRight: margin,
+        }
+      ]}
+      {...rest}
+    >
+        <Text style={styles.text}>{label}</Text>
     </TouchableOpacity>
   )
 }
@@ -16,13 +31,20 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
         paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: 'black'
+        paddingVertical: 5,
+        borderRadius: 8,
+        borderWidth: 2,
+        borderColor: 'black',
+        shadowColor: 'black',
+        shadowOffset: {width: 2, height: 2},
+        shadowOpacity: 1,
+        shadowRadius: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     text: {
-        fontWeight: "bold",
+        fontWeight: '600',
         fontSize: 15
     }
 })

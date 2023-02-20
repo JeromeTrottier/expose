@@ -1,6 +1,6 @@
 import {Auth, getAuth, onAuthStateChanged, User} from 'firebase/auth';
 import { DocumentData } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { firebaseApp } from '../firebase';
 import { createUserInDB, getUserFromDB } from '../models/user-model';
 
@@ -11,7 +11,7 @@ export default function useAuthentification(userModulator: React.Dispatch<React.
         const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
             if (user) {
                 const userData = getUserFromDB(user.uid);
-                userModulator(userData);
+                userModulator({userData, user});
             } else {
                 console.log("Pas connecté");
                 userModulator(undefined);

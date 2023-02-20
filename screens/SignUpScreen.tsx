@@ -30,9 +30,6 @@ const SignUpScreen = () => {
             label='Créer un compte'
             color={Colors.light.tint}
         />
-        <Subtitle 
-            label='Information de connexion'
-        />
         <FormInput
             labelValue={newUserInfo.email}
             placeholder='E-mail'
@@ -63,9 +60,6 @@ const SignUpScreen = () => {
             autoComplete={'off'}
             secureTextEntry={true}
             textContentType='password'
-        />
-        <Subtitle 
-            label='Information de profil'
         />
         <FormInput
             labelValue={newUserInfo.displayName}
