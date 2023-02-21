@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -11,6 +11,7 @@ import Colors from '../constants/Colors';
 import { UserContext } from '../contexts/userContext';
 import CreatePostButton from '../components/CreatePostButton';
 import PostFormScreen from '../screens/PostFormScreen';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const TabStack = createBottomTabNavigator<RootTabParamList>();
 const RootStack = createStackNavigator<RootParamList>();
@@ -58,7 +59,9 @@ const MainTabStack = () => {
         borderTopColor: 'black',
         borderTopWidth: 2
       },
-      tabBarActiveTintColor: Colors.light.tabIconSelected,
+      tabBarActiveTintColor: Colors.light.background,
+      tabBarInactiveTintColor: Colors.light.tint,
+      tabBarActiveBackgroundColor: Colors.light.tint
     }}
   >
       <TabStack.Screen 
@@ -68,7 +71,7 @@ const MainTabStack = () => {
           tabBarShowLabel: false,
           tabBarIcon: ({color, size}) => (
             <Icon name='home' color={color} size={30}/>
-          ),
+          )
         })}
       />
       <TabStack.Screen 

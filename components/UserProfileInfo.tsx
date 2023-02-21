@@ -1,19 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import UserProfileInfoItem from './UserProfileInfoItem';
+import useUserStats from '../hooks/useUserStats';
 
 type UserProfileInfoProps = {
-  followers?: number;
-  posts?: number;
-  exposes?: number;
+  userID: string
 }
 
-const UserProfileInfo = ({followers, posts, exposes}: UserProfileInfoProps) => {
+const UserProfileInfo = ({userID}: UserProfileInfoProps) => {
+
+  const {followers, posts, exposes} = useUserStats(userID);
+
+  // console.log("UserProfileInfo - Followers: ", followers, " Posts: ", posts, " Exposes: ", exposes);   
+  
   return (
     <View style={styles.container}>
-      <UserProfileInfoItem label='Abonnées' />
-      <UserProfileInfoItem label='Publications'/>
-      <UserProfileInfoItem label='Exposes'/>
+      <UserProfileInfoItem label='Abonnées' number={followers}/>
+      <UserProfileInfoItem label='Publications' number={posts}/>
+      <UserProfileInfoItem label='Exposes' number={exposes}/>
     </View>
   )
 }

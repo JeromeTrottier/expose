@@ -5,12 +5,13 @@ import SearchBox from '../components/search/SearchBox'
 import InfiniteHits from '../components/search/InfiniteHits'
 import algoliasearch from 'algoliasearch/lite';
 import { SearchScreenProps } from '../types'
+import Colors from '../constants/Colors'
 
 const searchClient = algoliasearch('5SM9YKBLI0', 'abaac6e522d870ab882c2be207e23c1b');
 
 const SearchScreen = ({navigation}: SearchScreenProps) => {
   return (
-    <View>
+    <View style={styles.container}>
       <InstantSearch
           searchClient={searchClient}
           indexName={"users"}
@@ -24,4 +25,9 @@ const SearchScreen = ({navigation}: SearchScreenProps) => {
 
 export default SearchScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.light.background,
+    flex: 1
+  }
+})

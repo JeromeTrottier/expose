@@ -12,8 +12,13 @@ type AuthorProps = {
 const Author = ({authorID, exposerID, ...rest}: AuthorProps & ViewProps) => {
 
   const authorData = useDBUser(authorID);
-  const {displayName: exposerName} = useDBUser(exposerID);
   const authorPicture = useProfilePicture(authorData.profilePictureID);
+
+  const {displayName: exposerName} = useDBUser(exposerID);
+
+  console.log(exposerID);
+  
+  
 
     return (
         <View  {...rest}>

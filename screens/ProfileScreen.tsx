@@ -13,60 +13,58 @@ import useProfilePicture from '../hooks/useProfilePicture'
 import LazyLoadingImage from '../components/LazyLoadingImage'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import ExposesList from '../components/ExposesList'
+import Colors from '../constants/Colors'
+import { signOutUser } from '../models/user-model'
 
 type MainNavigationProps = StackNavigationProp<RootParamList>;
 
 const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
     
     const user = useContext(UserContext);
-
-    
-
     const mainNav = useNavigation<MainNavigationProps>();
-    
     
     if (user?.user.uid === route.params.userID || route.params.userID === undefined) {
         
         const profilePictureUrl = useFirebaseStorageImage(`images/profilePictures/${user?.userData._z.profilePictureID}.jpg`)
 
         return (
-            <ScrollView
-            alwaysBounceVertical={true}
-            >
+            <View style={styles.container}>
                 {
                     user ? 
-                    <View>
-                        <View style={styles.identityContainer}>
-                        {
-                            profilePictureUrl ? 
-                            <LazyLoadingImage
-                                profilePictureUrl={profilePictureUrl}
-                                width={windowWidth / 3}
-                                height={windowWidth / 3}
-                            />
-                            :
-                            <></>
+                    <ExposesList
+                        userID={route.params.userID}
+                        headerComponent={
+                            <View style={styles.profileHeader}>
+                                <View style={styles.identityContainer}>
+                                {
+                                    profilePictureUrl ? 
+                                    <LazyLoadingImage
+                                        profilePictureUrl={profilePictureUrl}
+                                        width={windowWidth / 3}
+                                        height={windowWidth / 3}
+                                    />
+                                    :
+                                    <></>
+                                }
+                                    <Text style={styles.profileName}>{user.user.displayName}</Text>
+                                </View>
+                                <View style={styles.interactionContainer}>
+                                    <InteractionButton label='Paramètres' margin={10} padding={30}/>
+                                    <InteractionButton label='Se déconnecter' margin={10} padding={39} onPress={signOutUser}/>
+                                </View>
+                                <View>
+                                    <UserProfileInfo userID={user?.user.uid}/>
+                                </View>
+                                <Text style={styles.profileName}>Exposes</Text>
+                            </View>
                         }
-                            <Text style={styles.profileName}>{user.userData._z.displayName}</Text>
-                        </View>
-                        <View style={styles.interactionContainer}>
-                            <InteractionButton label='Paramètres' margin={10}/>
-
-                        </View>
-                        <View>
-                            <UserProfileInfo />
-                        </View>
-                        <View
-                            
-                        >
-                            <Post/>
-                        </View>
-                    </View>
+                    />
                     
                     :
                     <></>
                 }
-            </ScrollView>
+            </View>
         )
     } else {
 
@@ -75,41 +73,41 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
         const profilePictureUrl = useProfilePicture(otherUser.profilePictureID);
 
         return (
-            <ScrollView
-            alwaysBounceVertical={true}
-            >
+            <View style={styles.container}>
                 {
                     user ? 
-                    <View>
-                        <View style={styles.identityContainer}>
-                        {
-                            profilePictureUrl ? 
-                            <LazyLoadingImage
-                                profilePictureUrl={profilePictureUrl}
-                                width={windowWidth / 3}
-                                height={windowWidth / 3}
-                            />
-                            :
-                            <></>
+                    <ExposesList
+                        userID={route.params.userID}
+                        headerComponent={
+                            <View style={styles.profileHeader}>
+                                <View style={styles.identityContainer}>
+                                {
+                                    profilePictureUrl ? 
+                                    <LazyLoadingImage
+                                        profilePictureUrl={profilePictureUrl}
+                                        width={windowWidth / 3}
+                                        height={windowWidth / 3}
+                                    />
+                                    :
+                                    <></>
+                                }
+                                    <Text style={styles.profileName}>{otherUser.displayName}</Text>
+                                </View>
+                                <View style={styles.interactionContainer}>
+                                    <InteractionButton label='Expose cette personne' margin={10} onPress={() => mainNav.navigate('Modal', {authorID: route.params.userID})}/>
+                                    <InteractionButton label='Suivre' padding={48}/>
+                                </View>
+                                <View>
+                                    <UserProfileInfo userID={route.params.userID}/>
+                                </View>
+                                <Text style={styles.profileName}>Exposes</Text>
+                            </View>
                         }
-                            <Text style={styles.profileName}>{otherUser.displayName}</Text>
-                        </View>
-                        <View style={styles.interactionContainer}>
-                            <InteractionButton label='Expose cette personne' margin={10} onPress={() => mainNav.navigate('Modal', {authorID: route.params.userID})}/>
-                            <InteractionButton label='Suivre' padding={48}/>
-                        </View>
-                        <View>
-                            <UserProfileInfo />
-                        </View>
-                        <View>
-                            <Post/>
-                        </View>
-                    </View>
-                    
+                    />
                     :
                     <></>
                 }
-            </ScrollView>
+            </View>
         )
     }
     
@@ -118,7 +116,13 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
 export default ProfileScreen
 
 const styles = StyleSheet.create({
-
+    container: {
+        backgroundColor: Colors.light.background,
+        flex: 1
+    },
+    profileHeader: {
+        marginBottom: 10
+    },
     identityContainer: {
         display: 'flex',
         flexDirection: 'row',

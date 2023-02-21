@@ -1,5 +1,5 @@
 const tintColorLight = '#62BAC0';
-const tintColorDark = '#fff';
+const tintColorDark = '#0B1F46';
 const yellow = '#FFD600';
 const pink = '#F8BED4';
 

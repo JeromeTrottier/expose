@@ -28,11 +28,16 @@ const Post = ({title="No title", description, authorID, exposerID, imageURL='htt
             colors={['rgba(255,255,255,0.6)', 'transparent']}
             style={styles.gradient}
         />
-        <Author 
-            authorID='j7fqf34edOZGlMizcCeSEnLZsRw2' 
-            exposerID='9CmgedsCobM3doqUYHyJFmwCW7o2'
-            style={{position: 'absolute', zIndex: 4, margin: 10}}
-        />
+        {
+            (exposerID && authorID) ?
+            <Author 
+                authorID={authorID}
+                exposerID={exposerID}
+                style={{position: 'absolute', zIndex: 4, margin: 10}}
+            /> :
+            <></>
+        }
+        
         <LazyLoadingImage
             profilePictureUrl={imageURL}
             borderWidth={0}
@@ -101,7 +106,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         marginHorizontal: 20,
         borderRadius: 8,
-        position: 'relative'
+        position: 'relative',
+        backgroundColor: 'white'
     },
     title: {
         marginTop: 10,

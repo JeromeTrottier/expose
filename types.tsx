@@ -88,4 +88,11 @@ export type DBExposePost = {
     imageID: string;
     authorID: string;
     exposerID: string;
+    createdAt: string;
+}
+
+export type ExposeUserStats = {
+    followers: number;
+    posts: number;
+    exposes: number;
 }

@@ -18,32 +18,26 @@ const PostFormScreen = ({route, navigation}: PostFormScreenProps) => {
     description: '',
     imageURI: '',
     exposerID: '',
-    authorID: '',
+    authorID: ''
   });
 
   useEffect(() => {
-
     const authorID = route.params.authorID;
+    const exposerID = user?.user.uid;
 
-    if (user?.user.uid) {
-      setPostState({...postState, exposerID: user.user.uid});
-    } else {
-      alert('NO EXPOSER');
-    }
-
-    if (authorID) { 
-      setPostState({...postState, authorID: authorID});
-    } else {
-      alert('NO AUTHOR');
+    if (authorID && exposerID) {
+      setPostState({...postState, exposerID: exposerID, authorID: authorID});
     }
   }, []);
 
   const handleCreatePost = () => {
+    console.log(postState);
+    
     if (postState.title == '') {alert('no title'); return;}
     if (postState.description == '') {alert('no desc'); return;}
     if (postState.imageURI == '') {alert('no image'); return;}
-    if (postState.exposerID == '') {alert('no exposer'); return;}
-    if (postState.authorID == '') {alert('no author'); return;}
+    if(postState.exposerID == ''){alert('no exposer'); return;}
+    if(postState.authorID == '' ){alert('no author'); return;}
 
     createPost(postState);
 
