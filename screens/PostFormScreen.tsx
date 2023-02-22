@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { ExposePostForm, PostFormScreenProps } from '../types'
-import FormInput from '../components/FormInput';
+import FormInput from '../components/form/FormInput';
 import { Icon } from '@rneui/themed';
 import Title from '../components/Title';
-import ImagePickerButton from '../components/ImagePickerButton';
-import FormButton from '../components/FormButton';
+import ImagePickerButton from '../components/form/ImagePickerButton';
+import FormButton from '../components/form/FormButton';
 import { windowWidth } from '../utils/Dimensions';
 import { createPost } from '../models/user-model';
 import { UserContext } from '../contexts/userContext';
@@ -46,9 +46,9 @@ const PostFormScreen = ({route, navigation}: PostFormScreenProps) => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <Title
-        label='Creation de post'
+        label="Création d'Expose"
       />
       <FormInput
         placeholder='Titre'
@@ -59,6 +59,7 @@ const PostFormScreen = ({route, navigation}: PostFormScreenProps) => {
             name='title'
           />
         }
+        style={{width: windowWidth - 50, height: 50}}
       />
       <FormInput
         placeholder='Description'
@@ -69,6 +70,7 @@ const PostFormScreen = ({route, navigation}: PostFormScreenProps) => {
             name='description'
           />
         }
+        style={{width: windowWidth - 50, height: 150}}
       />
       <ImagePickerButton
         onImageChosen={(uri) => {setPostState({...postState, imageURI: uri})}}
@@ -84,4 +86,10 @@ const PostFormScreen = ({route, navigation}: PostFormScreenProps) => {
 
 export default PostFormScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})

@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlatList, RefreshControl } from 'react-native-gesture-handler'
 import Post from './Post'
 import useExposes from '../hooks/useExposes'
+import useRefresh from '../hooks/useRefresh'
 
 interface ExposesListProps {
     userID: string
@@ -10,7 +11,10 @@ interface ExposesListProps {
 }
 
 const ExposesList = ({userID, headerComponent}: ExposesListProps ) => {
-    const exposes = useExposes(userID);
+
+    const {refreshing, onRefresh} = useRefresh();
+
+    const exposes = useExposes(userID, refreshing);
 
     return (
         <FlatList
@@ -22,10 +26,14 @@ const ExposesList = ({userID, headerComponent}: ExposesListProps ) => {
                     description={item.description}
                     authorID={item.authorID}
                     exposerID={item.exposerID}
-                    // imageURL={item.imageID}
+                    imageID={item.imageID}
                 />
             }
             ListEmptyComponent={<><EmptyDataComponent/></>}
+            ItemSeparatorComponent={() => <View style={{height: 10}}/>}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
         />
     )
 }

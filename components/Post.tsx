@@ -7,86 +7,93 @@ import PostInteractionButton from './PostInteractionButton';
 import { Icon } from '@rneui/themed';
 import Colors from '../constants/Colors';
 import PostRatingButton from './PostRatingButton';
-import Exposer from './Exposer';
+import usePostImage from '../hooks/usePostImage'
 
 type PostProps = {
     title?: string;
     description?: string;
     authorID?: string;
     exposerID?: string;
-    imageURL?: string;
+    imageID?: string;
     
 }
 
-const Post = ({title="No title", description, authorID, exposerID, imageURL='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'}: PostProps) => {
-  return (
-    <View style={styles.container}>
-      {
-        imageURL ? 
-        <>
-        <LinearGradient
-            colors={['rgba(255,255,255,0.6)', 'transparent']}
-            style={styles.gradient}
-        />
+const Post = ({title="No title", description, authorID, exposerID, imageID}: PostProps) => {
+
+    const imageURL = usePostImage(imageID);
+
+    return (
+        <View style={styles.container}>
         {
-            (exposerID && authorID) ?
-            <Author 
-                authorID={authorID}
-                exposerID={exposerID}
-                style={{position: 'absolute', zIndex: 4, margin: 10}}
-            /> :
-            <></>
+            imageURL ? 
+            <>
+                <LinearGradient
+                    colors={['rgba(255,255,255,0.6)', 'transparent']}
+                    style={styles.gradient}
+                />
+                {
+                    (exposerID && authorID) ?
+                    <Author 
+                        authorID={authorID}
+                        exposerID={exposerID}
+                        style={{position: 'absolute', zIndex: 4, margin: 10}}
+                    /> :
+                    <></>
+                }
+                
+                <LazyLoadingImage
+                    profilePictureUrl={imageURL}
+                    borderWidth={0}
+                    borderRadius={0}
+                    shadowOffset={0}
+                    width={'auto'}
+                    height={275}
+                />
+            </>
+            :
+                (exposerID && authorID) ?
+                    <Author 
+                        authorID={authorID}
+                        exposerID={exposerID}
+                    />
+                :
+                <></>
+            
         }
         
-        <LazyLoadingImage
-            profilePictureUrl={imageURL}
-            borderWidth={0}
-            borderRadius={0}
-            shadowOffset={0}
-            width={'auto'}
-            height={275}
-        />
-        </>
-         :
-         <Author 
-            authorID='j7fqf34edOZGlMizcCeSEnLZsRw2'
-            exposerID='9CmgedsCobM3doqUYHyJFmwCW7o2'
-        />
-      }
-      
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
-      <View style={styles.postBottom}>
-        <PostInteractionButton 
-            iconComponent={
-                <Icon
-                    name='share'
-                    type='font-awesome-5'
-                    size={23}
-                    color={'black'}
-                />
-            }
-            color={Colors.light.pink}
-        />
-        <PostInteractionButton 
-            iconComponent={
-                <Icon
-                    name='comments'
-                    type='font-awesome-5'
-                    size={20}
-                    color={'black'}
-                />
-            }
-            color={Colors.light.tint}
-            hasCounter={true}
-        />
-        <PostRatingButton
-            color={Colors.light.yellow}
-        />
-      </View>
-      
-    </View>
-  )
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
+        <View style={styles.postBottom}>
+            <PostInteractionButton 
+                iconComponent={
+                    <Icon
+                        name='share'
+                        type='font-awesome-5'
+                        size={23}
+                        color={'black'}
+                    />
+                }
+                color={Colors.light.pink}
+            />
+            <PostInteractionButton 
+                iconComponent={
+                    <Icon
+                        name='comments'
+                        type='font-awesome-5'
+                        size={20}
+                        color={'black'}
+                    />
+                }
+                color={Colors.light.tint}
+                hasCounter={true}
+            />
+            <PostRatingButton
+                color={Colors.light.yellow}
+            />
+        </View>
+        
+        </View>
+    )
 }
 
 export default Post

@@ -1,7 +1,7 @@
 import { StyleSheet, Button, View, Image, ViewProps, StyleProp, ViewStyle } from 'react-native'
 import React, { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker';
-import { windowHeight, windowWidth } from '../utils/Dimensions';
+import { windowHeight, windowWidth } from '../../utils/Dimensions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from '@rneui/themed';
 
@@ -25,7 +25,7 @@ const ImagePickerButton = ({onImageChosen, style}: ImagePickerButtonProps) => {
     
         console.log(result);
     
-        if (!result.canceled) {
+        if (result.assets) {
             setImage(result.assets[0].uri);
             onImageChosen(result.assets[0].uri);
         }

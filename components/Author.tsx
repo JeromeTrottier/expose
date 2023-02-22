@@ -15,9 +15,6 @@ const Author = ({authorID, exposerID, ...rest}: AuthorProps & ViewProps) => {
   const authorPicture = useProfilePicture(authorData.profilePictureID);
 
   const {displayName: exposerName} = useDBUser(exposerID);
-
-  console.log(exposerID);
-  
   
 
     return (

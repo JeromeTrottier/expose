@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { getExposesFromUser } from "../models/user-model";
 import { DBExposePost } from "../types";
 
-export default function useExposes(userID: string) {
+export default function useExposes(userID: string, refreshing: boolean) {
     const [exposes, setExposes] = useState<Array<DBExposePost>>([]);
-
+    
     useEffect(() => {
         const func = async () => {
 
@@ -16,7 +16,7 @@ export default function useExposes(userID: string) {
         }
 
         func();
-    }, []);
+    }, [refreshing]);
 
     return exposes;
 }

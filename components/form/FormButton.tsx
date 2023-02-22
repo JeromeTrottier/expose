@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import React from 'react'
-import { windowHeight, windowWidth } from '../utils/Dimensions'
+import { windowHeight, windowWidth } from '../../utils/Dimensions'
 
 type FormButtonProps = {
     title: string;

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useContext } from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { HomeTabScreenProps, ProfileScreenProps, RootParamList, RootTabParamList, SearchTabScreenProps } from '../types';
 import HomeScreen from '../screens/HomeScreen';
@@ -9,15 +9,22 @@ import { Icon } from '@rneui/themed';
 import SearchStack from './SearchStack';
 import Colors from '../constants/Colors';
 import { UserContext } from '../contexts/userContext';
-import CreatePostButton from '../components/CreatePostButton';
 import PostFormScreen from '../screens/PostFormScreen';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import SettingsScreen from '../screens/SettingsScreen';
+import IconButton from '../components/IconButton';
+import { useNavigation } from '@react-navigation/native';
+import { signOutUser } from '../models/user-model';
 
 const TabStack = createBottomTabNavigator<RootTabParamList>();
 const RootStack = createStackNavigator<RootParamList>();
 
+type NavigationProps = StackNavigationProp<RootParamList>;
+
 
 const AppStack = () => {
+
+  const nav = useNavigation<NavigationProps>();
+
   return (
     <RootStack.Navigator
       screenOptions={{
@@ -34,7 +41,29 @@ const AppStack = () => {
           marginBottom: 5
         },
         headerTitleAlign: 'left',
-        headerRight: () => (<CreatePostButton/>),
+        headerRight: () => (
+          <View style={{display: 'flex', flexDirection: 'row'}}>
+          <IconButton
+            iconComponent={
+              <Icon
+                name='settings'
+                type='feather'
+              />
+            }
+            onPress={() => nav.navigate('Settings')}
+          />
+          <IconButton
+            iconComponent={
+              <Icon
+                name='sign-out'
+                type='font-awesome'
+              />
+            }
+            onPress={signOutUser}
+          />
+          </View>
+          
+        ),
         headerBackImage: () => (<Icon name='arrow-back-ios' type='material-icons' style={{marginLeft: 10, marginBottom: 5}}/>),
         headerBackTitleVisible: false,
 
@@ -42,6 +71,7 @@ const AppStack = () => {
     >
       <RootStack.Screen name='Main'  component={MainTabStack}/>
       <RootStack.Screen name='Modal' component={PostFormScreen}/>
+      <RootStack.Screen name='Settings' component={SettingsScreen}/>
     </RootStack.Navigator>
   )
 }

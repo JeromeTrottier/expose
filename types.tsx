@@ -20,6 +20,7 @@ export type LoginScreenProps = NativeStackScreenProps<AuthStackParamList, 'Login
 export type RootParamList = {
     Main: undefined;
     Modal: {authorID: string | undefined};
+    Settings: undefined;
 }
 
 export type PostFormScreenProps = NativeStackScreenProps<RootParamList, 'Modal'>;

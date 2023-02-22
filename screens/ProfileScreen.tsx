@@ -26,14 +26,14 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
     
     if (user?.user.uid === route.params.userID || route.params.userID === undefined) {
         
-        const profilePictureUrl = useFirebaseStorageImage(`images/profilePictures/${user?.userData._z.profilePictureID}.jpg`)
+        const profilePictureUrl = useProfilePicture(user?.userData._z.profilePictureID);
 
         return (
             <View style={styles.container}>
                 {
                     user ? 
                     <ExposesList
-                        userID={route.params.userID}
+                        userID={user.user.uid}
                         headerComponent={
                             <View style={styles.profileHeader}>
                                 <View style={styles.identityContainer}>
@@ -49,10 +49,9 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
                                 }
                                     <Text style={styles.profileName}>{user.user.displayName}</Text>
                                 </View>
-                                <View style={styles.interactionContainer}>
-                                    <InteractionButton label='Paramètres' margin={10} padding={30}/>
+                                {/* <View style={styles.interactionContainer}>
                                     <InteractionButton label='Se déconnecter' margin={10} padding={39} onPress={signOutUser}/>
-                                </View>
+                                </View> */}
                                 <View>
                                     <UserProfileInfo userID={user?.user.uid}/>
                                 </View>

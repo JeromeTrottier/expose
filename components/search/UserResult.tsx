@@ -6,6 +6,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { SearchStackParamList } from "../../types";
 import Colors from '../../constants/Colors';
 import LazyLoadingImage from '../LazyLoadingImage';
+import useProfilePicture from '../../hooks/useProfilePicture';
 
 
 type NavigationProps = StackNavigationProp<SearchStackParamList>;
@@ -21,31 +22,33 @@ const UserResult = ({displayName, profilePictureID, username, userID}: UserResul
 
     const nav = useNavigation<NavigationProps>();
 
-    const profilePictureUrl = useFirebaseStorageImage(`images/profilePictures/${profilePictureID}.jpg`);
+    console.log(profilePictureID);
+    
+    const profilePictureUrl = useProfilePicture(profilePictureID);
 
-  return (
-    <TouchableOpacity
-        onPress={() => nav.push('OtherProfile', {userID: userID})}
-    >
-        <View style={styles.container}>
-            {
-                profilePictureID ? 
-                <LazyLoadingImage
-                    profilePictureUrl={profilePictureUrl}
-                    width={75}
-                    height={75}
-                    shadowOffset={3}
-                />
-                 :
-                <></>
-            }
-            <View style={{marginLeft: 10}}>
-                <Text style={styles.displayName}>{displayName}</Text>
-                <Text style={styles.username}>{username}</Text>
+    return (
+        <TouchableOpacity
+            onPress={() => nav.push('OtherProfile', {userID: userID})}
+        >
+            <View style={styles.container}>
+                {
+                    profilePictureID ? 
+                    <LazyLoadingImage
+                        profilePictureUrl={profilePictureUrl}
+                        width={75}
+                        height={75}
+                        shadowOffset={3}
+                    />
+                    :
+                    <></>
+                }
+                <View style={{marginLeft: 10}}>
+                    <Text style={styles.displayName}>{displayName}</Text>
+                    <Text style={styles.username}>{username}</Text>
+                </View>
             </View>
-        </View>
-    </TouchableOpacity>
-  )
+        </TouchableOpacity>
+    )
 }
 
 export default UserResult

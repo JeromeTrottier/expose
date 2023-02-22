@@ -170,9 +170,9 @@ export const getPosts = async (lastPostsKey?: string | undefined) => {
 
         const postsQuery = 
             lastPostsKey ? 
-                query(postsRef, orderBy('createdAt'), startAfter(lastPostsKey), limit(5)) 
+                query(postsRef, orderBy('createdAt', 'desc'), startAfter(lastPostsKey), limit(5)) 
             : 
-                query(postsRef, orderBy('createdAt'), limit(5));
+                query(postsRef, orderBy('createdAt', 'desc'), limit(5));
 
         const postsSnapshot = await getDocs(postsQuery);
         
@@ -212,7 +212,6 @@ export const getExposesFromUser = async (userID: string) => {
         await Promise.all(
             querySnapshot.docs.map(async (expose) => {
             const postID = expose.data().postID;
-            // console.warn(postID);
             const postRef = doc(bdFirestore, "posts", postID);
             const exposeSnapshot = await getDoc(postRef);
             const exposePostData = await exposeSnapshot.data();
