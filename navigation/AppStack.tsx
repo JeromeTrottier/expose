@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useContext } from 'react'
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { HomeTabScreenProps, ProfileScreenProps, RootParamList, RootTabParamList, SearchTabScreenProps } from '../types';
+import { FollowingFeedScreenProps, HomeTabScreenProps, ProfileScreenProps, RootParamList, RootTabParamList, SearchTabScreenProps } from '../types';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { Icon } from '@rneui/themed';
@@ -14,6 +14,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import IconButton from '../components/IconButton';
 import { useNavigation } from '@react-navigation/native';
 import { signOutUser } from '../models/user-model';
+import FollowingFeedScreen from '../screens/FollowingFeedScreen';
 
 const TabStack = createBottomTabNavigator<RootTabParamList>();
 const RootStack = createStackNavigator<RootParamList>();
@@ -104,6 +105,16 @@ const MainTabStack = () => {
           tabBarShowLabel: false,
           tabBarIcon: ({color, size}) => (
             <Icon name='home' color={color} size={30}/>
+          )
+        })}
+      />
+      <TabStack.Screen 
+        name='FollowingFeed' 
+        component={FollowingFeedScreen}
+        options={({ navigation }: FollowingFeedScreenProps) => ({
+          tabBarShowLabel: false,
+          tabBarIcon: ({color, size}) => (
+            <Icon name='contacts' color={color} size={30}/>
           )
         })}
       />

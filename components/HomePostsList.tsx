@@ -1,11 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 import { FlatList, RefreshControl } from 'react-native-gesture-handler'
 import usePosts from '../hooks/usePosts';
 import Post from './Post';
 import useRefresh from '../hooks/useRefresh';
-import useNewPosts from '../hooks/useNewPosts';
-import { DBExposePost } from '../types';
 
 type HomePostsListProps = {
     headerComponent?: React.ReactNode;
@@ -13,36 +11,19 @@ type HomePostsListProps = {
 
 
 const HomePostsList = ({headerComponent}: HomePostsListProps) => {
-
-    const [posts, setPosts] = useState<Array<DBExposePost>>([]);
     const [loadNewPosts, setLoadNewPosts] = useState<boolean>(false);
-
     const {refreshing, onRefresh} = useRefresh();
+    const posts = usePosts(refreshing, loadNewPosts);
 
-    const {initialPosts, lastPostKey} = usePosts(refreshing);
-    const newPosts = useNewPosts(loadNewPosts);
 
-    useEffect(() => {
-        setPosts(initialPosts);
-    }, [initialPosts]);
-
-    useEffect(() => {
-        setPosts([...posts, ...newPosts]);
-    }, [newPosts]);
-    
-
-    const handleEndReached = (info: any) => {
-        console.log("end reached");
-        
-        setLoadNewPosts(true);
-        setTimeout(() => {
-            setLoadNewPosts(false);
-        }, 2000);
+    const handleViewMorePosts = () => {       
+        setLoadNewPosts(!loadNewPosts);
     }
 
     return (
         <FlatList
             ListHeaderComponent={<>{headerComponent? headerComponent : <></>}</>}
+            ListFooterComponent={<Button title='Voir plus...' onPress={handleViewMorePosts}/>}
             data={posts}
             renderItem={({item}) => 
                 <Post 
@@ -58,7 +39,6 @@ const HomePostsList = ({headerComponent}: HomePostsListProps) => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
-            onEndReached={(info) =>handleEndReached(info)}
         />
     )
 }

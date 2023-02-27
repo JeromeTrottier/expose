@@ -5,17 +5,16 @@ import useUserStats from '../hooks/useUserStats';
 
 type UserProfileInfoProps = {
   userID: string
+  stateModulator?: boolean
 }
 
-const UserProfileInfo = ({userID}: UserProfileInfoProps) => {
+const UserProfileInfo = ({userID, stateModulator}: UserProfileInfoProps) => {
 
-  const {followers, posts, exposes} = useUserStats(userID);
-
-  // console.log("UserProfileInfo - Followers: ", followers, " Posts: ", posts, " Exposes: ", exposes);   
+  const {followers, posts, exposes} = useUserStats(userID, stateModulator);
   
   return (
     <View style={styles.container}>
-      <UserProfileInfoItem label='Abonnées' number={followers}/>
+      <UserProfileInfoItem label='Abonné(e)s' number={followers}/>
       <UserProfileInfoItem label='Publications' number={posts}/>
       <UserProfileInfoItem label='Exposes' number={exposes}/>
     </View>

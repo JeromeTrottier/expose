@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getUserStat } from "../models/user-model";
 import { ExposeUserStats } from "../types";
 
-export default function useUserStats(userID: string) {
+export default function useUserStats(userID: string, stateModulator?: boolean) {
     const [userStats, setUserStats] = useState<ExposeUserStats>({
         followers: 0,
         posts: 0,
@@ -11,7 +11,7 @@ export default function useUserStats(userID: string) {
 
     useEffect(() => {
         const getStats = async () => {
-           const followersStats = await getUserStat(userID, "followers");
+           const followersStats = await getUserStat(userID, "followingUsers");
            const postsStats = await getUserStat(userID, "posts");
            const exposesStats = await getUserStat(userID, "exposes");
            setUserStats({
@@ -21,7 +21,7 @@ export default function useUserStats(userID: string) {
            });
         }
         getStats();
-    }, []) 
+    }, [stateModulator]) 
 
     return userStats;
 }

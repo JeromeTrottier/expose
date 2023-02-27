@@ -15,7 +15,8 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import ExposesList from '../components/ExposesList'
 import Colors from '../constants/Colors'
-import { signOutUser } from '../models/user-model'
+import { followUser, signOutUser, unfollowUser } from '../models/user-model'
+import useIsUserFollowed from '../hooks/useIsUserFollowed'
 
 type MainNavigationProps = StackNavigationProp<RootParamList>;
 
@@ -71,6 +72,21 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
 
         const profilePictureUrl = useProfilePicture(otherUser.profilePictureID);
 
+        const [following, setFollowing] = useState<boolean>(false);
+
+        const isOtherUserFollowed = useIsUserFollowed(user?.user.uid, route.params.userID, following);  
+
+        const handleUnfollow = async () => {
+            await unfollowUser(user?.user.uid, route.params.userID);
+            setFollowing(!following);
+        }
+
+        const handleFollow = async () => {
+            await followUser(user?.user.uid, route.params.userID);
+            setFollowing(!following);
+        }
+    
+
         return (
             <View style={styles.container}>
                 {
@@ -94,10 +110,17 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
                                 </View>
                                 <View style={styles.interactionContainer}>
                                     <InteractionButton label='Expose cette personne' margin={10} onPress={() => mainNav.navigate('Modal', {authorID: route.params.userID})}/>
-                                    <InteractionButton label='Suivre' fillRemainingSpace={true}/>
+                                    {
+                                        isOtherUserFollowed ?
+                                        <InteractionButton label='Suivi(e) ✓' fillRemainingSpace={true} onPress={handleUnfollow}/>
+                                        :
+                                        <InteractionButton label='Suivre' fillRemainingSpace={true} onPress={handleFollow}/>
+
+                                    }
+                                    
                                 </View>
                                 <View>
-                                    <UserProfileInfo userID={route.params.userID}/>
+                                    <UserProfileInfo userID={route.params.userID} stateModulator={following}/>
                                 </View>
                                 <Text style={styles.profileName}>Exposes </Text>
                             </View>
