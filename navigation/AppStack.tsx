@@ -21,6 +21,8 @@ const RootStack = createStackNavigator<RootParamList>();
 type NavigationProps = StackNavigationProp<RootParamList>;
 
 
+
+
 const AppStack = () => {
 
   const nav = useNavigation<NavigationProps>();
@@ -29,7 +31,7 @@ const AppStack = () => {
     <RootStack.Navigator
       screenOptions={{
         headerShown: true,
-        title: 'Expose',
+        title: 'Expose ',
         headerStyle: {
           backgroundColor: Colors.light.tint,
           borderBottomColor: 'black',
@@ -38,7 +40,8 @@ const AppStack = () => {
         headerTitleStyle: {
           fontWeight: '600',
           fontSize: 20,
-          marginBottom: 5
+          marginBottom: 5,
+          fontStyle: 'italic'
         },
         headerTitleAlign: 'left',
         headerRight: () => (

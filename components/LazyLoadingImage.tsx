@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         shadowColor: 'black',
         shadowOpacity: 1,
-        shadowRadius: 0
+        shadowRadius: 0,
+        overflow: 'hidden'
     },
     skeleton: {
         position: "absolute",

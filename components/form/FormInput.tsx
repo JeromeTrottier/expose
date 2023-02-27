@@ -8,10 +8,11 @@ type FormInputProps = {
     labelValue: string;
     placeholder?: string;
     iconComponent?: React.ReactNode;
-    style?: ViewStyle
+    style?: ViewStyle;
+    isMultiline?: boolean;
 }
 
-const FormInput = ({labelValue, placeholder='Placeholder...', iconComponent, style, ...rest}: FormInputProps & TextInputProps) => {
+const FormInput = ({labelValue, placeholder='Placeholder...', iconComponent, style, isMultiline=false, ...rest}: FormInputProps & TextInputProps) => {
   return (
     <View style={[styles.inputContainer, style]}>
         <View style={styles.inputIcon}>
@@ -20,9 +21,10 @@ const FormInput = ({labelValue, placeholder='Placeholder...', iconComponent, sty
         <TextInput
             value={labelValue}
             style={styles.inputText}
-            numberOfLines={1}
             placeholder={placeholder}
             {...rest}
+            numberOfLines={isMultiline? 5: 1}
+            multiline={isMultiline}
         />
     </View>
   )

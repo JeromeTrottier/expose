@@ -3,20 +3,23 @@ import React from 'react'
 
 type InteractionButtonProps = {
   label: string;
-  padding?: number;
   margin?: number;
+  fillRemainingSpace?: boolean;
 }
 
-const InteractionButton = ({label, padding=15, margin=5, ...rest}: InteractionButtonProps & TouchableOpacityProps) => {
+const InteractionButton = ({label, margin=5, fillRemainingSpace=false, ...rest}: InteractionButtonProps & TouchableOpacityProps) => {
 
   return (
     <TouchableOpacity 
       style={[
         styles.container, 
+        { marginRight: margin },
+        fillRemainingSpace ? 
         {
-          paddingHorizontal: padding, 
-          marginRight: margin,
-        }
+          flex: 1
+        } :
+        {}
+
       ]}
       {...rest}
     >
