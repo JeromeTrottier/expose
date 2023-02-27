@@ -1,6 +1,6 @@
-import { StyleSheet, TextInput, TextInputProps, View } from 'react-native'
+import { StyleSheet, TextInput, TextInputProps, View, ViewStyle } from 'react-native'
 import React from 'react'
-import { windowHeight, windowWidth } from '../utils/Dimensions'
+import { windowHeight, windowWidth } from '../../utils/Dimensions'
 
 
 
@@ -8,11 +8,12 @@ type FormInputProps = {
     labelValue: string;
     placeholder?: string;
     iconComponent?: React.ReactNode;
+    style?: ViewStyle
 }
 
-const FormInput = ({labelValue, placeholder='Placeholder...', iconComponent, ...rest}: FormInputProps & TextInputProps) => {
+const FormInput = ({labelValue, placeholder='Placeholder...', iconComponent, style, ...rest}: FormInputProps & TextInputProps) => {
   return (
-    <View style={styles.inputContainer}>
+    <View style={[styles.inputContainer, style]}>
         <View style={styles.inputIcon}>
             { iconComponent }
         </View>
@@ -37,11 +38,14 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 10,
         width: windowWidth - 100,
-        height: windowHeight / 15,
+        height: windowHeight / 11,
         backgroundColor: '#fff',
-        borderColor: '#aaa',
-        borderWidth: 1,
-        borderRadius: 50
+        borderColor: 'black',
+        borderWidth: 2,
+        shadowColor: 'black',
+        shadowOffset: {width: 4, height: 4},
+        shadowOpacity: 1,
+        shadowRadius: 0
     },
     inputText: {
         fontSize: 18,

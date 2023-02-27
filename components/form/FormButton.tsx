@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import React from 'react'
-import { windowHeight, windowWidth } from '../utils/Dimensions'
+import { windowHeight, windowWidth } from '../../utils/Dimensions'
 
 type FormButtonProps = {
     title: string;
@@ -24,8 +24,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 10,
         width: windowWidth - 100,
-        height: windowHeight / 15,
-        borderRadius: 50
+        height: windowHeight / 11,
+        borderColor: 'black',
+        borderWidth: 2,
+        shadowColor: 'black',
+        shadowOffset: {width: 4, height: 4},
+        shadowOpacity: 1,
+        shadowRadius: 0
     },
     buttonText: {
         fontSize: 18,

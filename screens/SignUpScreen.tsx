@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 import Title from '../components/Title'
 import { Icon } from '@rneui/themed'
 import Colors from '../constants/Colors'
-import FormInput from '../components/FormInput'
-import FormButton from '../components/FormButton'
-import TextSeparation from '../components/TextSeparation'
-import SocialButton from '../components/SocialButton'
+import FormInput from '../components/form/FormInput'
+import FormButton from '../components/form/FormButton'
+import TextSeparation from '../components/form/TextSeparation'
+import SocialButton from '../components/form/SocialButton'
 import { createAccountWithLoginInformation, signInWithFacebook } from '../models/user-model'
 import { ExposeUser } from '../types'
 import Subtitle from '../components/Subtitle'
-import ImagePickerButton from '../components/ImagePickerButton'
+import ImagePickerButton from '../components/form/ImagePickerButton'
 import { ScrollView } from 'react-native-gesture-handler'
 
 const SignUpScreen = () => {
@@ -29,9 +29,6 @@ const SignUpScreen = () => {
         <Title
             label='Créer un compte'
             color={Colors.light.tint}
-        />
-        <Subtitle 
-            label='Information de connexion'
         />
         <FormInput
             labelValue={newUserInfo.email}
@@ -63,9 +60,6 @@ const SignUpScreen = () => {
             autoComplete={'off'}
             secureTextEntry={true}
             textContentType='password'
-        />
-        <Subtitle 
-            label='Information de profil'
         />
         <FormInput
             labelValue={newUserInfo.displayName}

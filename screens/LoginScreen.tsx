@@ -1,19 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import FormButton from '../components/FormButton'
+import FormButton from '../components/form/FormButton'
 
 import Colors from '../constants/Colors'
-import FormInput from '../components/FormInput'
+import FormInput from '../components/form/FormInput'
 
 import { Icon } from '@rneui/themed'
-import SocialButton from '../components/SocialButton'
-import TextButton from '../components/TextButton'
+import SocialButton from '../components/form/SocialButton'
+import TextButton from '../components/form/TextButton'
 import { LoginScreenProps } from '../types'
 import Title from '../components/Title'
-import TextSeparation from '../components/TextSeparation'
+import TextSeparation from '../components/form/TextSeparation'
 import { signInWithFacebook, signInWithLoginInformation } from '../models/user-model'
-import useAuthentification from '../hooks/useAuthentification'
-import ErrorMessage from '../components/ErrorMessage'
+import ErrorMessage from '../components/form/ErrorMessage'
 
 const LoginScreen = ({navigation}: LoginScreenProps) => {
 
@@ -24,8 +23,8 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
     return (
         <View style={styles.container}>
             <Title
-                label='Se connecter'
-                color={Colors.light.tint}
+                label='Bienvenue sur Expose'
+                color={Colors.light.text}
             />
             <ErrorMessage 
                 message={error}

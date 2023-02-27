@@ -28,10 +28,12 @@ const styles = StyleSheet.create({
     line: {
         marginHorizontal: 10,
         flexGrow: 1,
-        height: 1,
-        backgroundColor: '#666'
+        height: 2,
+        backgroundColor: 'black'
     },
     text: {
-        color: '#666'
+        color: 'black',
+        fontSize: 18,
+        fontWeight: '700'
     }
 })

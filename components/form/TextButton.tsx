@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
-import { windowHeight, windowWidth } from '../utils/Dimensions'
+import { windowHeight, windowWidth } from '../../utils/Dimensions'
 import React from 'react'
 
 type TextButtonProps = {

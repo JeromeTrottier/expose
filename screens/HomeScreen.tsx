@@ -1,23 +1,20 @@
-import { StyleSheet, Text, View} from 'react-native'
-import React from 'react'
+import { StyleSheet, View} from 'react-native'
+import React, { useCallback, useState } from 'react'
 import { HomeTabScreenProps } from '../types'
-import FormButton from '../components/FormButton'
-import { signOutUser } from '../models/user-model'
-import { SafeAreaView } from 'react-native-safe-area-context'
-
-
-
+import usePosts from '../hooks/usePosts'
+import HomePostsList from '../components/HomePostsList'
+import Colors from '../constants/Colors'
+import { RefreshControl, ScrollView } from 'react-native-gesture-handler'
 
 const HomeScreen = ({navigation}: HomeTabScreenProps) => {
   return (
-    <SafeAreaView>
-        <Text>Home</Text>
-        <FormButton
-          title='Déconnecter'
-          color='black'
-          onPress={signOutUser}
-        />
-    </SafeAreaView>
+    <View style={styles.container}>
+      <HomePostsList
+        headerComponent={
+            <View style={styles.header}></View>
+        }
+      />
+    </View>
   )
 }
 
@@ -25,8 +22,10 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+      backgroundColor: Colors.light.background,
+      flex: 1,
+    },
+    header: {
+      marginTop: 20
     }
 })

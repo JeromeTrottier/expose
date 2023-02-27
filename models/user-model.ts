@@ -19,8 +19,8 @@ import {
     AccessToken,
 } from 'react-native-fbsdk-next'
 import { FirebaseError } from "firebase/app";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { DBExposeUser, ExposeUser } from "../types";
+import { addDoc, collection, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc, startAfter } from "firebase/firestore";
+import { DBExposeUser, ExposeUser, DBExposePost, ExposePostForm, ExposeUserStats } from "../types";
 import { uploadImage } from "./image-model";
 import 'react-native-get-random-values';
 import { v4 as uuidv4} from "uuid";
@@ -45,7 +45,6 @@ export const signInWithFacebook = async () => {
 
     if (additionalUserInfo?.isNewUser) {
         console.log("creating new user....");
-        
         await createUserInDB(userCredentials.user, {
             username: makeUsername(userCredentials.user.displayName),
             displayName: userCredentials.user.displayName,
@@ -100,7 +99,6 @@ export const signInWithLoginInformation = async (email: string, password: string
 }
 
 export const signOutUser = async () => {
-
     const firebaseAuth: Auth = getAuth(firebaseApp);
 
     await signOut(firebaseAuth);
@@ -111,7 +109,7 @@ export const createUserInDB = async (user: User, expoUser: DBExposeUser) => {
     const profilePictureID: string = uuidv4();
 
     if (expoUser.profilePictureID) {
-        await uploadImage(expoUser.profilePictureID, profilePictureID);
+        await uploadImage(expoUser.profilePictureID, profilePictureID, 'profilePictures');
     }
 
     await setDoc(
@@ -132,6 +130,121 @@ export const createUserInDB = async (user: User, expoUser: DBExposeUser) => {
 
 }
 
+export const createPost = async (postInfo: ExposePostForm) => {   
+
+    const imageID: string = uuidv4();
+
+    if (postInfo.imageURI) {
+        await uploadImage(postInfo.imageURI, imageID, 'postImages');
+    }
+    
+    await addDoc(
+        collection(bdFirestore, 'posts'),
+        {
+            title: postInfo.title,
+            description: postInfo.description,
+            imageID: imageID,
+            exposerID: postInfo.exposerID,
+            authorID:  postInfo.authorID,
+            createdAt: Date.now()
+        }
+    ).then(async (data) => {
+        await addDoc(
+            collection(bdFirestore, 'users', postInfo.exposerID, 'posts'),
+            {
+                postID: data.id
+            }
+        );
+        await addDoc(
+            collection(bdFirestore, 'users', postInfo.authorID, 'exposes'),
+            {
+                postID: data.id
+            }
+        );
+    })
+}
+
+export const getPosts = async (lastPostsKey?: string | undefined) => {
+    try {
+        const postsRef = collection(bdFirestore, "posts");
+
+        const postsQuery = 
+            lastPostsKey ? 
+                query(postsRef, orderBy('createdAt', 'desc'), startAfter(lastPostsKey), limit(5)) 
+            : 
+                query(postsRef, orderBy('createdAt', 'desc'), limit(5));
+
+        const postsSnapshot = await getDocs(postsQuery);
+        
+        const exposes: DBExposePost[] = [];
+
+        await Promise.all(
+            postsSnapshot.docs.map(async (post) => {
+            const postData = post.data();
+            if (postData) {
+                exposes.push({
+                    title: postData.title,
+                    description: postData.description,
+                    imageID: postData.imageID,
+                    authorID: postData.authorID,
+                    exposerID: postData.exposerID,
+                    createdAt: postData.createdAt
+                });
+            }
+            })
+        );
+
+        return exposes;
+
+    } catch (e:any) {
+        console.warn(e);
+    }
+    
+
+}
+
+export const getExposesFromUser = async (userID: string) => {
+    try {
+        const querySnapshot = await getDocs(collection(bdFirestore, "users", userID, "exposes"));
+
+        const exposes: DBExposePost[] = [];
+
+        await Promise.all(
+            querySnapshot.docs.map(async (expose) => {
+            const postID = expose.data().postID;
+            const postRef = doc(bdFirestore, "posts", postID);
+            const exposeSnapshot = await getDoc(postRef);
+            const exposePostData = await exposeSnapshot.data();
+            if (exposePostData) {
+                exposes.push({
+                    title: exposePostData.title,
+                    description: exposePostData.description,
+                    imageID: exposePostData.imageID,
+                    authorID: exposePostData.authorID,
+                    exposerID: exposePostData.exposerID,
+                    createdAt: exposePostData.createdAt
+                });
+            }
+            })
+        );
+    
+        return exposes;
+
+    } catch (e: any) {
+        console.log(e);
+    }
+}
+
+export const getUserStat = async (userID: string, path: string) => {
+    try {
+        const querySnapshot = await getDocs(collection(bdFirestore, "users", userID, path));
+        return querySnapshot.size;
+    } catch (e: any) {
+        console.error("query erreur: ", e)
+    }
+    return 0;
+}
+
 export const updateUserInformation = async (user: User, newUserInfo: {displayName?: string | null | undefined, photoURL?: string | null | undefined}) => {
     await updateProfile(user, newUserInfo);
 }
@@ -141,8 +254,15 @@ export const getUserFromDB = async (userID: string) => {
     const userSnap = await getDoc(userRef);
 
     if (userSnap.exists()) {
+        
         const userData = userSnap.data();
-        return userData;
+        const exposeUserData: DBExposeUser = {
+            displayName: userData.displayName,
+            email: userData.email,
+            profilePictureID: userData.profilePictureID,
+            username: userData.username
+        }
+        return exposeUserData;
     } else {
         console.error("No user with this ID");
         return undefined;
