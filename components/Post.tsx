@@ -138,7 +138,6 @@ const styles = StyleSheet.create({ // Les styles de la publication
         borderRadius: 8,
         position: 'relative',
         backgroundColor: 'white',
-        minHeight: 275,
     },
     title: { // Style du titre de la publication
         marginTop: 10,

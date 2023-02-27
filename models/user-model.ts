@@ -168,12 +168,16 @@ export const createPost = async (postInfo: ExposePostForm) => {
 }
 
 export const getPosts = async (lastPostsKey?: number | undefined) => {
+
+    // console.log("Dernier post: ", lastPostsKey);
+    
+
     try {
         const postsRef = collection(bdFirestore, "posts");
 
         const postsQuery = 
             lastPostsKey ? 
-                query(postsRef, orderBy('createdAt', 'desc'), startAfter(lastPostsKey), limit(5)) 
+                query(postsRef, orderBy('createdAt', 'desc'), startAfter(lastPostsKey), limit(5))
             : 
                 query(postsRef, orderBy('createdAt', 'desc'), limit(5));
         
@@ -201,7 +205,7 @@ export const getPosts = async (lastPostsKey?: number | undefined) => {
         return exposes;
 
     } catch (e:any) {
-        console.warn(e);
+        console.warn("ATTENTION : ", e);
     }
     
 
