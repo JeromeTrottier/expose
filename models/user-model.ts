@@ -134,16 +134,19 @@ export const createPost = async (postInfo: ExposePostForm) => {
 
     const imageID: string = uuidv4();
 
-    if (postInfo.imageURI) {
+    if (postInfo.imageURI != '') {
         await uploadImage(postInfo.imageURI, imageID, 'postImages');
     }
+
+    console.log("CreatePost : uploaded image");
+    
     
     await addDoc(
         collection(bdFirestore, 'posts'),
         {
-            title: postInfo.title,
+            title: (postInfo.title === '') ? 'Pas de titre': postInfo.title,
             description: postInfo.description,
-            imageID: imageID,
+            imageID: (postInfo.imageURI !== '') ? imageID : '',
             exposerID: postInfo.exposerID,
             authorID:  postInfo.authorID,
             createdAt: Date.now()
@@ -164,7 +167,7 @@ export const createPost = async (postInfo: ExposePostForm) => {
     })
 }
 
-export const getPosts = async (lastPostsKey?: string | undefined) => {
+export const getPosts = async (lastPostsKey?: number | undefined) => {
     try {
         const postsRef = collection(bdFirestore, "posts");
 
@@ -173,6 +176,7 @@ export const getPosts = async (lastPostsKey?: string | undefined) => {
                 query(postsRef, orderBy('createdAt', 'desc'), startAfter(lastPostsKey), limit(5)) 
             : 
                 query(postsRef, orderBy('createdAt', 'desc'), limit(5));
+        
 
         const postsSnapshot = await getDocs(postsQuery);
         
@@ -204,9 +208,20 @@ export const getPosts = async (lastPostsKey?: string | undefined) => {
 }
 
 export const getExposesFromUser = async (userID: string) => {
-    try {
-        const querySnapshot = await getDocs(collection(bdFirestore, "users", userID, "exposes"));
 
+    const sortByTimestamp = (array: DBExposePost[]) => {
+        return array.sort(function(x: DBExposePost, y: DBExposePost){
+            if (x.createdAt < y.createdAt) return 1
+            if (x.createdAt > y.createdAt) return -1 
+            return 0
+        })
+    } 
+
+    try {
+
+        const exposesRef = collection(bdFirestore, "users", userID, "exposes");
+        
+        const querySnapshot = await getDocs(exposesRef);
         const exposes: DBExposePost[] = [];
 
         await Promise.all(
@@ -228,7 +243,7 @@ export const getExposesFromUser = async (userID: string) => {
             })
         );
     
-        return exposes;
+        return sortByTimestamp(exposes);
 
     } catch (e: any) {
         console.log(e);

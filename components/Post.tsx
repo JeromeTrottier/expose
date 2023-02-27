@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ViewProps } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Author from './Author';
 import LazyLoadingImage from './LazyLoadingImage';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -21,6 +21,14 @@ type PostProps = {
 const Post = ({title="No title", description, authorID, exposerID, imageID}: PostProps) => {
 
     const imageURL = usePostImage(imageID);
+
+    const [isImagePost, setIsImagePost] = useState(false);
+
+    useEffect(() => {
+        if (title === "Pas de titre" && description === '') {
+            setIsImagePost(true);
+        }
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -44,7 +52,7 @@ const Post = ({title="No title", description, authorID, exposerID, imageID}: Pos
                 <LazyLoadingImage
                     profilePictureUrl={imageURL}
                     borderWidth={0}
-                    borderRadius={0}
+                    borderRadius={5}
                     shadowOffset={0}
                     width={'auto'}
                     height={275}
@@ -55,15 +63,28 @@ const Post = ({title="No title", description, authorID, exposerID, imageID}: Pos
                     <Author 
                         authorID={authorID}
                         exposerID={exposerID}
+                        style={{margin: 10}}
                     />
                 :
                 <></>
             
         }
+        {
+            (isImagePost) ?
+            <></>  :
+            <>
+                <Text style={styles.title}>{title}</Text>
+                {
+                    (description !== '') ?
+                    <Text style={styles.description}>{description}</Text>
+                    :
+                    <></>
+                }
+            </>
+
+        }
         
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-        <View style={styles.postBottom}>
+        <View style={[styles.postBottom, isImagePost ? {position: 'absolute', right: 0, bottom: 0} : {}]}>
             <PostInteractionButton 
                 iconComponent={
                     <Icon
@@ -123,7 +144,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     description: {
-        fontSize: 18,
+        fontSize: 14,
         marginHorizontal: 20,
         marginBottom: 10
     },

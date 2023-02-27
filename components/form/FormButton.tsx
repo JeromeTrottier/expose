@@ -1,15 +1,16 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native'
 import React from 'react'
 import { windowHeight, windowWidth } from '../../utils/Dimensions'
 
 type FormButtonProps = {
     title: string;
     color?: string;
+    style?: ViewStyle;
 }
 
-const FormButton = ({title, color='blue', ...rest}: FormButtonProps & TouchableOpacityProps) => {
+const FormButton = ({title, color='blue', style, ...rest}: FormButtonProps & TouchableOpacityProps) => {
   return (
-      <TouchableOpacity style={[styles.buttonContainer, {backgroundColor: color}]} {...rest}>
+      <TouchableOpacity style={[styles.buttonContainer, {backgroundColor: color}, style]} {...rest}>
         <Text style={styles.buttonText}>{title}</Text>
       </TouchableOpacity>
   )

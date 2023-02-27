@@ -90,16 +90,16 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
                                     :
                                     <></>
                                 }
-                                    <Text style={styles.profileName}>{otherUser.displayName}</Text>
+                                    <Text style={styles.profileName}>{otherUser.displayName} </Text>
                                 </View>
                                 <View style={styles.interactionContainer}>
                                     <InteractionButton label='Expose cette personne' margin={10} onPress={() => mainNav.navigate('Modal', {authorID: route.params.userID})}/>
-                                    <InteractionButton label='Suivre' padding={48}/>
+                                    <InteractionButton label='Suivre' fillRemainingSpace={true}/>
                                 </View>
                                 <View>
                                     <UserProfileInfo userID={route.params.userID}/>
                                 </View>
-                                <Text style={styles.profileName}>Exposes</Text>
+                                <Text style={styles.profileName}>Exposes </Text>
                             </View>
                         }
                     />

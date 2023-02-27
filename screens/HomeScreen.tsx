@@ -1,10 +1,8 @@
 import { StyleSheet, View} from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { HomeTabScreenProps } from '../types'
-import usePosts from '../hooks/usePosts'
 import HomePostsList from '../components/HomePostsList'
 import Colors from '../constants/Colors'
-import { RefreshControl, ScrollView } from 'react-native-gesture-handler'
 
 const HomeScreen = ({navigation}: HomeTabScreenProps) => {
   return (

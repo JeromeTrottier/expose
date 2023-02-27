@@ -89,7 +89,7 @@ export type DBExposePost = {
     imageID: string;
     authorID: string;
     exposerID: string;
-    createdAt: string;
+    createdAt: number;
 }
 
 export type ExposeUserStats = {

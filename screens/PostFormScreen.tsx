@@ -9,6 +9,7 @@ import FormButton from '../components/form/FormButton';
 import { windowWidth } from '../utils/Dimensions';
 import { createPost } from '../models/user-model';
 import { UserContext } from '../contexts/userContext';
+import Colors from '../constants/Colors';
 
 const PostFormScreen = ({route, navigation}: PostFormScreenProps) => {
   const user = useContext(UserContext);
@@ -31,16 +32,12 @@ const PostFormScreen = ({route, navigation}: PostFormScreenProps) => {
   }, []);
 
   const handleCreatePost = () => {
-    console.log(postState);
-    
-    if (postState.title == '') {alert('no title'); return;}
-    if (postState.description == '') {alert('no desc'); return;}
-    if (postState.imageURI == '') {alert('no image'); return;}
+    if (postState.title == '' && postState.description == '' && postState.imageURI == '') {alert("Vous devez remplir au moins un type d'information."); return;}
     if(postState.exposerID == ''){alert('no exposer'); return;}
     if(postState.authorID == '' ){alert('no author'); return;}
 
     createPost(postState);
-
+    
     alert('Post created!');
 
   }
@@ -79,6 +76,8 @@ const PostFormScreen = ({route, navigation}: PostFormScreenProps) => {
       <FormButton
         title='Créer'
         onPress={handleCreatePost}
+        color={Colors.light.tint}
+        style={{width: windowWidth - 50}}
       />
     </View>
   )
@@ -88,6 +87,7 @@ export default PostFormScreen
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Colors.light.background,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'

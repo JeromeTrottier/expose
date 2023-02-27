@@ -23,8 +23,6 @@ const ImagePickerButton = ({onImageChosen, style}: ImagePickerButtonProps) => {
           quality: 1,
         });
     
-        console.log(result);
-    
         if (result.assets) {
             setImage(result.assets[0].uri);
             onImageChosen(result.assets[0].uri);

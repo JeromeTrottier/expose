@@ -21,8 +21,6 @@ type UserResultProps = {
 const UserResult = ({displayName, profilePictureID, username, userID}: UserResultProps) => {
 
     const nav = useNavigation<NavigationProps>();
-
-    console.log(profilePictureID);
     
     const profilePictureUrl = useProfilePicture(profilePictureID);
 

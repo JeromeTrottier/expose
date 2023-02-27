@@ -5,15 +5,27 @@ import useAuthentification from '../hooks/useAuthentification'
 import AppStack from './AppStack'
 import { UserContext } from '../contexts/userContext'
 import { DocumentData } from 'firebase/firestore'
+import { DefaultTheme } from '@react-navigation/native';
+import Colors from '../constants/Colors'
 
 const Routes = () => {
 
   const [userData, setUserData] = useState<DocumentData | undefined>();
 
   const auth = useAuthentification(setUserData);
+
+  const ExposeTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: Colors.light.background
+    }
+  }
   
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      theme={ExposeTheme}
+    >
       {
         userData ?
         <UserContext.Provider value={userData}>

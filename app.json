@@ -38,8 +38,7 @@
           "appID": "715027393433912",
           "clientToken": "27aeb0cdd4e70771d60425e1da5a3a29",
           "displayName": "expose"
-        },
-        "expo-image-picker"
+        }
       ]
     ]
   }
