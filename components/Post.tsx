@@ -74,7 +74,7 @@ const Post = ({title="No title", description, authorID, exposerID, imageID}: Pos
             (isImagePost) ? // Si la publication ne contient qu'une seule image (pas de titre ou de description)
             <></>  : //Nous n'afficons pas le titre ni la description
             <> 
-                <Text style={styles.title}>{title}</Text> {/* Sinon on affiche le titre et la description*/}
+                <Text style={styles.title}>{title}</Text>
                 {
                     (description !== '') ?
                     <Text style={styles.description}>{description}</Text>
@@ -83,9 +83,10 @@ const Post = ({title="No title", description, authorID, exposerID, imageID}: Pos
                 }
             </>
 
-        }
-        
-        <View style={[styles.postBottom, isImagePost ? {position: 'absolute', right: 0, bottom: 0} : {}]}> {/* Ici, on affiche les boutons d'interaction de la publication */}
+        } 
+
+        {/* Ici, on affiche les boutons d'interaction de la publication */}
+        <View style={[styles.postBottom, isImagePost ? {position: 'absolute', right: 0, bottom: 0} : {}]}> 
             <PostInteractionButton  // Bouton pour partager la publication
                 iconComponent={
                     <Icon
@@ -136,7 +137,8 @@ const styles = StyleSheet.create({ // Les styles de la publication
         marginHorizontal: 20,
         borderRadius: 8,
         position: 'relative',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        minHeight: 275,
     },
     title: { // Style du titre de la publication
         marginTop: 10,

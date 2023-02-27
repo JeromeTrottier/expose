@@ -29,9 +29,12 @@ export type RootTabParamList = {
     Home: undefined;
     Profile: {userID: string};
     SearchStack: undefined;
+    FollowingFeed: undefined;
 }
 
 export type HomeTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
+
+export type FollowingFeedScreenProps = BottomTabScreenProps<RootTabParamList, 'FollowingFeed'>;
 
 export type ProfileScreenProps = CompositeScreenProps<
     BottomTabScreenProps<RootTabParamList, 'Profile'>,

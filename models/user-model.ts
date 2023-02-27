@@ -19,7 +19,7 @@ import {
     AccessToken,
 } from 'react-native-fbsdk-next'
 import { FirebaseError } from "firebase/app";
-import { addDoc, collection, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc, startAfter } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc, startAfter, where } from "firebase/firestore";
 import { DBExposeUser, ExposeUser, DBExposePost, ExposePostForm, ExposeUserStats } from "../types";
 import { uploadImage } from "./image-model";
 import 'react-native-get-random-values';
@@ -290,4 +290,63 @@ const makeUsername = (displayName: string | null) => {
         return username;
     }
     return null;
+}
+
+export const followUser = async (followingUserID: string, userFollowedID: string) => {
+    await addDoc(
+        collection(bdFirestore, 'users', followingUserID, 'usersFollowed'),
+        {
+            userFollowedID: userFollowedID
+        }
+    ).then(async (data) => {
+        await addDoc(
+            collection(bdFirestore, 'users', userFollowedID, 'followingUsers'),
+            {
+                followingUser: followingUserID
+            }
+        );
+    })
+}
+
+export const unfollowUser = async (followingUserID: string, userFollowedID: string) => {
+
+    const userFollowedDocIDQuery = query(collection(bdFirestore, "users", followingUserID, "usersFollowed"), where("userFollowedID", "==", userFollowedID));
+    const followingUserDocIDQuery = query(collection(bdFirestore, "users", userFollowedID, "followingUsers"), where("followingUser", "==", followingUserID));
+
+    const userFollowedDocIDSnapshot = await getDocs(userFollowedDocIDQuery);
+    const followingUserDocIDSnapshot = await getDocs(followingUserDocIDQuery);
+
+    const userFollowedDocID: string[] = [];
+    const followingUserDocID: string[] = [];
+
+    userFollowedDocIDSnapshot.forEach((userFollowed) => {
+        userFollowedDocID.push(userFollowed.id);
+    });
+
+    followingUserDocIDSnapshot.forEach((followingUser) => {
+        followingUserDocID.push(followingUser.id);
+    });
+    
+    await deleteDoc(doc(bdFirestore, 'users', followingUserID, 'usersFollowed', userFollowedDocID[0]));
+    await deleteDoc(doc(bdFirestore, 'users', userFollowedID, 'followingUsers', followingUserDocID[0]));
+}
+
+export const getIsUserFollowed = async (userID: string, potentialFollowedUserID: string) => {
+    const usersFollowedRef = collection(bdFirestore, "users", userID, "usersFollowed");
+
+    const usersFollowedSnapshot = await getDocs(usersFollowedRef);
+
+    const followedUsers: string[] = [];
+
+    usersFollowedSnapshot.forEach((userFollowed) => {
+        if (userFollowed.data().userFollowedID === potentialFollowedUserID) {
+            followedUsers.push(userFollowed.data().userFollowedID);
+        }
+    }) 
+
+    if (followedUsers.length == 1) {
+        return true;
+    } else {
+        return false;
+    }
 }
