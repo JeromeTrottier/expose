@@ -8,6 +8,7 @@ import { Icon } from '@rneui/themed';
 import Colors from '../constants/Colors';
 import PostRatingButton from './PostRatingButton';
 import usePostImage from '../hooks/usePostImage'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // Type custom des props passé à chacunes des publications de l'application
 
@@ -17,9 +18,10 @@ type PostProps = {
     authorID?: string; // Le ID de l'utilisateur sur lequel on publie la publication
     exposerID?: string; // Le ID de l'utilisateur qui publie la publication (l'exposer)
     imageID?: string; // Le ID de l'image (s'il y en a une) de la publication
+    postID: string
 }
 
-const Post = ({title="No title", description, authorID, exposerID, imageID}: PostProps) => { // Déclaration de composant avec ses paramètres
+const Post = ({title="No title", description, authorID, exposerID, imageID, postID}: PostProps) => { // Déclaration de composant avec ses paramètres
 
     const imageURL = usePostImage(imageID); // usePostImage est un hook qui prend en paramètre le ID de l'image et qui retourne son URL
 
@@ -32,7 +34,8 @@ const Post = ({title="No title", description, authorID, exposerID, imageID}: Pos
     }, [])
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity>
+            <View style={styles.container}>
         {
             imageURL ?  // Si il y a une imageURL on affiche ceci
             <>
@@ -116,6 +119,8 @@ const Post = ({title="No title", description, authorID, exposerID, imageID}: Pos
         </View>
         
         </View>
+        </TouchableOpacity>
+        
     )
 }
 

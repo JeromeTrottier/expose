@@ -26,7 +26,7 @@ const UserResult = ({displayName, profilePictureID, username, userID}: UserResul
 
     return (
         <TouchableOpacity
-            onPress={() => nav.push('OtherProfile', {userID: userID})}
+            onPress={() => nav.push('Profile', {userID: userID})}
         >
             <View style={styles.container}>
                 {

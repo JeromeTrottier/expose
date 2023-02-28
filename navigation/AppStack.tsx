@@ -1,28 +1,33 @@
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useContext } from 'react'
+import { UserContext } from '../contexts/userContext';
+
+//Navigation
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { FollowingFeedScreenProps, HomeTabScreenProps, ProfileScreenProps, RootParamList, RootTabParamList, SearchTabScreenProps } from '../types';
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import { FollowingFeedTabScreenProps, HomeTabScreenProps, ProfileTabScreenProps, RootParamList, RootTabParamList, SearchTabScreenProps } from '../types';
+
+//Other 
 import { Icon } from '@rneui/themed';
-import SearchStack from './SearchStack';
 import Colors from '../constants/Colors';
-import { UserContext } from '../contexts/userContext';
-import PostFormScreen from '../screens/PostFormScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import IconButton from '../components/IconButton';
 import { useNavigation } from '@react-navigation/native';
 import { signOutUser } from '../models/user-model';
-import FollowingFeedScreen from '../screens/FollowingFeedScreen';
+
+//Screens
+import PostFormScreen from '../screens/PostFormScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+
+//Stacks
+import HomeStack from './HomeStack';
+import SearchStack from './SearchStack';
+import FollowingFeedStack from './FollowingFeedStack';
+import ProfileStack from './ProfileStack';
 
 const TabStack = createBottomTabNavigator<RootTabParamList>();
 const RootStack = createStackNavigator<RootParamList>();
 
 type NavigationProps = StackNavigationProp<RootParamList>;
-
-
-
 
 const AppStack = () => {
 
@@ -99,8 +104,8 @@ const MainTabStack = () => {
     }}
   >
       <TabStack.Screen 
-        name='Home' 
-        component={HomeScreen}
+        name='HomeStack' 
+        component={HomeStack}
         options={({ navigation }: HomeTabScreenProps) => ({
           tabBarShowLabel: false,
           tabBarIcon: ({color, size}) => (
@@ -109,9 +114,9 @@ const MainTabStack = () => {
         })}
       />
       <TabStack.Screen 
-        name='FollowingFeed' 
-        component={FollowingFeedScreen}
-        options={({ navigation }: FollowingFeedScreenProps) => ({
+        name='FollowingFeedStack' 
+        component={FollowingFeedStack}
+        options={({ navigation }: FollowingFeedTabScreenProps) => ({
           tabBarShowLabel: false,
           tabBarIcon: ({color, size}) => (
             <Icon name='contacts' color={color} size={30}/>
@@ -129,9 +134,9 @@ const MainTabStack = () => {
         })}
       />
       <TabStack.Screen 
-        name='Profile' 
-        component={ProfileScreen} 
-        options={({ navigation }: ProfileScreenProps) => ({
+        name='ProfileStack' 
+        component={ProfileStack} 
+        options={({ navigation }: ProfileTabScreenProps) => ({
           tabBarShowLabel: false,
           tabBarIcon: ({color, size}) => (
             <Icon name='user-alt' type='font-awesome-5' color={color}/>

@@ -5,24 +5,28 @@ import { SearchStackParamList } from '../types';
 import SearchScreen from '../screens/SearchScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import Colors from '../constants/Colors';
+import { TabContext } from '../contexts/tabContext';
 
 const Stack = createStackNavigator<SearchStackParamList>();
 
 const SearchStack = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: true,
-        headerBackTitleVisible: false,
-        headerTitle: '',
-        headerStyle: {
-          backgroundColor: Colors.light.background
-        }
-      }}
-    >
-        <Stack.Screen name='Search' component={SearchScreen} options={{headerShown: false}}/>
-        <Stack.Screen name='OtherProfile' component={ProfileScreen}/>
-    </Stack.Navigator>
+    <TabContext.Provider value='Search'>
+        <Stack.Navigator
+        screenOptions={{
+          headerShown: true,
+          headerBackTitleVisible: false,
+          headerTitle: '',
+          headerStyle: {
+            backgroundColor: Colors.light.background
+          }
+        }}
+      >
+          <Stack.Screen name='Search' component={SearchScreen} options={{headerShown: false}}/>
+          <Stack.Screen name='Profile' component={ProfileScreen}/>
+      </Stack.Navigator>
+    </TabContext.Provider>
+    
   )
 }
 

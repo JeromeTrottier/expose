@@ -1,8 +1,13 @@
-import { StyleSheet, Text, View, ViewProps } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacityProps, View, ViewProps } from 'react-native'
+import React, { useContext } from 'react'
 import useDBUser from '../hooks/useDBUser';
 import LazyLoadingImage from './LazyLoadingImage';
 import useProfilePicture from '../hooks/useProfilePicture';
+import { TouchableOpacity } from 'react-native';
+import { TabContext } from '../contexts/tabContext';
+import { useNavigation } from '@react-navigation/native';
+import { FollowingFeedStackParamList, HomeStackParamList, ProfileStackParamList, SearchStackParamList } from '../types';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 type AuthorProps = {
     authorID: string;
@@ -11,28 +16,80 @@ type AuthorProps = {
 
 const Author = ({authorID, exposerID, ...rest}: AuthorProps & ViewProps) => {
 
-  const authorData = useDBUser(authorID);
-  const authorPicture = useProfilePicture(authorData.profilePictureID);
+    const authorData = useDBUser(authorID);
+    const authorPicture = useProfilePicture(authorData.profilePictureID);
 
-  const {displayName: exposerName} = useDBUser(exposerID);
-  
-
+    const {displayName: exposerName} = useDBUser(exposerID);
+    
     return (
         <View  {...rest}>
             <View style={styles.container}>
-                <LazyLoadingImage
-                    profilePictureUrl={authorPicture}
-                    width={35}
-                    height={35}
-                />
+                <ProfileNavigationButton
+                    userID={authorID}
+                >
+                    <LazyLoadingImage
+                        profilePictureUrl={authorPicture}
+                        width={35}
+                        height={35}
+                     />
+                </ProfileNavigationButton>
                 <View>
-                    <Text style={styles.author}>{authorData.displayName}</Text>
+                    <ProfileNavigationButton userID={authorID}>
+                        <Text style={styles.author}>{authorData.displayName}</Text>
+                    </ProfileNavigationButton>
+                        
+                    <ProfileNavigationButton userID={exposerID}>
                     <Text style={styles.exposer}><Text style={{fontWeight: '400'}}>Exposé par </Text>{exposerName}</Text>
+                    </ProfileNavigationButton>
+                        
                 </View>
                 
             </View>
         </View>
     )
+}
+
+const ProfileNavigationButton = ({children, userID, ...rest}: {children: JSX.Element[] | JSX.Element, userID: string} & TouchableOpacityProps) => {
+    
+    const tabContext = useContext(TabContext);
+
+    if (tabContext === "Home") {
+
+        const nav = useNavigation<StackNavigationProp<HomeStackParamList>>();
+
+        return (
+            <TouchableOpacity {...rest} onPress={() => {nav.push('Profile', {userID: userID})}} >
+                {children}
+            </TouchableOpacity>
+        )
+    } else if (tabContext === 'FollowindFeed') {
+
+        const nav = useNavigation<StackNavigationProp<FollowingFeedStackParamList>>();
+
+        return (
+            <TouchableOpacity {...rest} onPress={() => {nav.push('Profile', {userID: userID})}} >
+                {children}
+            </TouchableOpacity>
+        )
+    }  else if (tabContext === 'Profile') {
+
+        const nav = useNavigation<StackNavigationProp<ProfileStackParamList>>();
+
+        return (
+            <TouchableOpacity {...rest} onPress={() => {nav.push('Profile', {userID: userID})}} >
+                {children}
+            </TouchableOpacity>
+        )
+    } else {
+
+        const nav = useNavigation<StackNavigationProp<SearchStackParamList>>();
+
+        return (
+            <TouchableOpacity {...rest} onPress={() => {nav.push('Profile', {userID: userID})}} >
+                {children}
+            </TouchableOpacity>
+        )
+    }
 }
 
 export default Author

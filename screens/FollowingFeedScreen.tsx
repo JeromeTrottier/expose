@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import FollowingFeedList from '../components/FollowingFeedList'
 
 const FollowingFeedScreen = () => {
   return (
     <View>
-      <Text>FollowingFeedScreen</Text>
+      <FollowingFeedList/>
     </View>
   )
 }

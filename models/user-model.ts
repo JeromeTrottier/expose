@@ -168,10 +168,6 @@ export const createPost = async (postInfo: ExposePostForm) => {
 }
 
 export const getPosts = async (lastPostsKey?: number | undefined) => {
-
-    // console.log("Dernier post: ", lastPostsKey);
-    
-
     try {
         const postsRef = collection(bdFirestore, "posts");
 
@@ -196,7 +192,8 @@ export const getPosts = async (lastPostsKey?: number | undefined) => {
                     imageID: postData.imageID,
                     authorID: postData.authorID,
                     exposerID: postData.exposerID,
-                    createdAt: postData.createdAt
+                    createdAt: postData.createdAt,
+                    postID: post.id
                 });
             }
             })
@@ -212,15 +209,6 @@ export const getPosts = async (lastPostsKey?: number | undefined) => {
 }
 
 export const getExposesFromUser = async (userID: string) => {
-
-    const sortByTimestamp = (array: DBExposePost[]) => {
-        return array.sort(function(x: DBExposePost, y: DBExposePost){
-            if (x.createdAt < y.createdAt) return 1
-            if (x.createdAt > y.createdAt) return -1 
-            return 0
-        })
-    } 
-
     try {
 
         const exposesRef = collection(bdFirestore, "users", userID, "exposes");
@@ -241,7 +229,8 @@ export const getExposesFromUser = async (userID: string) => {
                     imageID: exposePostData.imageID,
                     authorID: exposePostData.authorID,
                     exposerID: exposePostData.exposerID,
-                    createdAt: exposePostData.createdAt
+                    createdAt: exposePostData.createdAt,
+                    postID: exposeSnapshot.id
                 });
             }
             })
@@ -354,3 +343,47 @@ export const getIsUserFollowed = async (userID: string, potentialFollowedUserID:
         return false;
     }
 }
+
+export const getSubscribtionPosts = async (userID: string) => {
+    const userFollowedIDs = await getUsersFollowedIDs(userID);
+
+    if (userFollowedIDs) {
+        const feedExposes: DBExposePost[] = [];
+
+        await Promise.all(
+            userFollowedIDs.map(async (id) => {
+                const exposes = await getExposesFromUser(id);
+                exposes?.forEach((expose) => {
+                    feedExposes.push(expose);
+                })
+            })
+        );
+        return sortByTimestamp(feedExposes);
+    }
+
+    return [];
+}
+
+const getUsersFollowedIDs = async (userID: string) => {
+    try {
+        const querySnapshot = await getDocs(collection(bdFirestore, "users", userID, "usersFollowed"));
+
+        const usersFollowedIDs: string[] = [];
+
+        querySnapshot.forEach((user) => {
+            usersFollowedIDs.push(user.data().userFollowedID);
+        });
+
+        return usersFollowedIDs;
+    } catch (e: any) {
+        console.warn(e);   
+    }
+}
+
+const sortByTimestamp = (array: DBExposePost[]) => {
+    return array.sort(function(x: DBExposePost, y: DBExposePost){
+        if (x.createdAt < y.createdAt) return 1
+        if (x.createdAt > y.createdAt) return -1 
+        return 0
+    })
+} 
