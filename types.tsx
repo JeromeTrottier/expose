@@ -26,41 +26,62 @@ export type RootParamList = {
 export type PostFormScreenProps = NativeStackScreenProps<RootParamList, 'Modal'>;
 
 export type RootTabParamList = {
-    Home: undefined;
-    Profile: {userID: string};
+    HomeStack: undefined;
+    ProfileStack: {userID: string};
     SearchStack: undefined;
-    FollowingFeed: undefined;
+    FollowingFeedStack: undefined;
 }
 
-export type HomeTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Home'>;
+export type HomeTabScreenProps = BottomTabScreenProps<RootTabParamList, 'HomeStack'>;
 
-export type FollowingFeedScreenProps = BottomTabScreenProps<RootTabParamList, 'FollowingFeed'>;
+export type FollowingFeedTabScreenProps = BottomTabScreenProps<RootTabParamList, 'FollowingFeedStack'>;
+
+export type ProfileTabScreenProps = BottomTabScreenProps<RootTabParamList, 'ProfileStack'>;
 
 export type ProfileScreenProps = CompositeScreenProps<
-    BottomTabScreenProps<RootTabParamList, 'Profile'>,
-    NativeStackScreenProps<SearchStackParamList, 'OtherProfile'>
+    BottomTabScreenProps<RootTabParamList, 'ProfileStack'>,
+    CompositeScreenProps<
+        NativeStackScreenProps<SearchStackParamList, 'Profile'>,
+        NativeStackScreenProps<HomeStackParamList, 'Profile'>
+    >
+    
 >;
 export type SearchTabScreenProps = BottomTabScreenProps<RootTabParamList, 'SearchStack'>;
 
+//Home Stack 
+export type HomeStackParamList = {
+    Home: undefined;
+    Profile: {userID: string};
+    Post: {postID: string};
+}
+
+export type HomeScreenProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
+
+export type PostScreenProps = NativeStackScreenProps<HomeStackParamList, 'Post'>;
+
+//Feed Stack
+export type FollowingFeedStackParamList = {
+    FollowingFeed: undefined;
+    Profile: {userID: string};
+    Post: {postID: string};
+}
+ 
+export type FollowingFeedScreenProps = NativeStackScreenProps<FollowingFeedStackParamList, 'FollowingFeed'>;
 
 //Search Stack
 export type SearchStackParamList = {
     Search: undefined;
-    OtherProfile: {userID: string};
+    Profile: {userID: string};
+    Post: {postID: string};
 }
 
 export type SearchScreenProps = NativeStackScreenProps<SearchStackParamList, 'Search'>;
-// export type OtherProfileScreenProps = NativeStackScreenProps<SearchStackParamList, 'OtherProfile'>;
 
-
-//Profile Tabs
-export type ProfileTabParamList = {
-    Posts: undefined;
-    Exposes: undefined;
+//Profile Stack
+export type ProfileStackParamList = {
+    Profile: {userID: string};
+    Post: {postID: string};
 }
-
-export type PostsTabScreenProps = MaterialTopTabScreenProps<ProfileTabParamList, 'Posts'>;
-export type ExposesTabScreenProps = MaterialTopTabScreenProps<ProfileTabParamList, 'Exposes'>;
 
 // Users
 export type ExposeUser = {
@@ -87,6 +108,7 @@ export type ExposePostForm = {
 }
 
 export type DBExposePost = {
+    postID: string;
     title: string;
     description: string;
     imageID: string;
@@ -100,3 +122,10 @@ export type ExposeUserStats = {
     posts: number;
     exposes: number;
 }
+
+export type ExposePostStats={
+    upvotes: number;
+    downvotes: number;
+}
+
+export type TabType = "Home" | "FollowindFeed" | "Search" | "Profile"; 

@@ -2,12 +2,9 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { ProfileScreenProps, RootParamList } from '../types'
 import { UserContext } from '../contexts/userContext'
-import useFirebaseStorageImage from '../hooks/useFirebaseStorageImage'
 import { windowWidth } from '../utils/Dimensions'
 import InteractionButton from '../components/InteractionButton'
 import UserProfileInfo from '../components/UserProfileInfo'
-import Post from '../components/Post'
-import { ScrollView } from 'react-native-gesture-handler'
 import useDBUser from '../hooks/useDBUser'
 import useProfilePicture from '../hooks/useProfilePicture'
 import LazyLoadingImage from '../components/LazyLoadingImage'
@@ -15,7 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import ExposesList from '../components/ExposesList'
 import Colors from '../constants/Colors'
-import { followUser, signOutUser, unfollowUser } from '../models/user-model'
+import { followUser, unfollowUser } from '../models/user-model'
 import useIsUserFollowed from '../hooks/useIsUserFollowed'
 
 type MainNavigationProps = StackNavigationProp<RootParamList>;
@@ -50,9 +47,6 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
                                 }
                                     <Text style={styles.profileName}>{user.user.displayName}</Text>
                                 </View>
-                                {/* <View style={styles.interactionContainer}>
-                                    <InteractionButton label='Se déconnecter' margin={10} padding={39} onPress={signOutUser}/>
-                                </View> */}
                                 <View>
                                     <UserProfileInfo userID={user?.user.uid}/>
                                 </View>

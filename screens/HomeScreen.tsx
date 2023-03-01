@@ -1,10 +1,10 @@
 import { StyleSheet, View} from 'react-native'
 import React, { useCallback, useState } from 'react'
-import { HomeTabScreenProps } from '../types'
+import { HomeScreenProps, HomeTabScreenProps } from '../types'
 import HomePostsList from '../components/HomePostsList'
 import Colors from '../constants/Colors'
 
-const HomeScreen = ({navigation}: HomeTabScreenProps) => {
+const HomeScreen = ({navigation}: HomeScreenProps) => {
   return (
     <View style={styles.container}>
       <HomePostsList

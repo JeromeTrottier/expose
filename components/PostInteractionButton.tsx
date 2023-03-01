@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacityProps, View } from 'react-native'
 import React from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native'
 
 type PostInteractionButtonProps = {
     iconComponent: React.ReactNode;
@@ -9,9 +9,9 @@ type PostInteractionButtonProps = {
     hasCounter?: boolean;
 }
 
-const PostInteractionButton = ({iconComponent, color="white", counter=0, hasCounter=false}: PostInteractionButtonProps) => {
+const PostInteractionButton = ({iconComponent, color="white", counter=0, hasCounter=false, ...rest}: PostInteractionButtonProps & TouchableOpacityProps) => {
   return (
-    <TouchableOpacity style={[styles.container, {backgroundColor: color}]}>
+    <TouchableOpacity style={[styles.container, {backgroundColor: color}]} {...rest}>
       {iconComponent}
       {hasCounter && <Text style={styles.counter}>{counter}</Text>}
     </TouchableOpacity>
