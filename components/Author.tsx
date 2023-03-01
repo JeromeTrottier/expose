@@ -11,10 +11,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 type AuthorProps = {
     authorID: string;
-    exposerID: string;
+    exposerID?: string;
+    isCommentAuthor?: boolean;
 }
 
-const Author = ({authorID, exposerID, ...rest}: AuthorProps & ViewProps) => {
+const Author = ({authorID, exposerID, isCommentAuthor=false, ...rest}: AuthorProps & ViewProps) => {
 
     const authorData = useDBUser(authorID);
     const authorPicture = useProfilePicture(authorData.profilePictureID);
@@ -37,11 +38,13 @@ const Author = ({authorID, exposerID, ...rest}: AuthorProps & ViewProps) => {
                     <ProfileNavigationButton userID={authorID}>
                         <Text style={styles.author}>{authorData.displayName}</Text>
                     </ProfileNavigationButton>
-                        
-                    <ProfileNavigationButton userID={exposerID}>
-                    <Text style={styles.exposer}><Text style={{fontWeight: '400'}}>Exposé par </Text>{exposerName}</Text>
-                    </ProfileNavigationButton>
-                        
+                    {
+                        (!isCommentAuthor && exposerID) ? 
+                        <ProfileNavigationButton userID={exposerID}>
+                            <Text style={styles.exposer}><Text style={{fontWeight: '400'}}>Exposé par </Text>{exposerName}</Text>
+                        </ProfileNavigationButton> :
+                        <></>
+                    }   
                 </View>
                 
             </View>

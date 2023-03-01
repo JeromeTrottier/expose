@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, TouchableOpacityProps, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
 import Author from './Author';
 import LazyLoadingImage from './LazyLoadingImage';
 import {LinearGradient} from 'expo-linear-gradient';
@@ -8,7 +8,14 @@ import { Icon } from '@rneui/themed';
 import Colors from '../constants/Colors';
 import PostRatingButton from './PostRatingButton';
 import usePostImage from '../hooks/usePostImage'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
+import { TabContext } from '../contexts/tabContext';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { FollowingFeedStackParamList, HomeStackParamList, ProfileStackParamList, SearchStackParamList } from '../types';
+import { PostNavigationButton } from './PostNavigationButton';
+import { downvotePost, upvotePost } from '../models/post-model';
+import { UserContext } from '../contexts/userContext';
 
 // Type custom des props passé à chacunes des publications de l'application
 
@@ -29,29 +36,34 @@ const Post = ({title="No title", description, authorID, exposerID, imageID, post
 
     useEffect(() => { // le hook useEffect effectue la fonction qu'on lui passe une seule fois si le dependency array est vide (le deuxieme argument du hook)
         if (title === "Pas de titre" && description === '') { // Verifier si la publication contient seulement une image, si oui on set isImagePost à true
-            setIsImagePost(true);
+            setIsImagePost(true); 
         }
     }, [])
 
+    
+
+    
+
     return (
-        <TouchableOpacity>
+        <PostNavigationButton postID={postID}>
             <View style={styles.container}>
         {
             imageURL ?  // Si il y a une imageURL on affiche ceci
             <>
-                <LinearGradient // Le composant LinearGradient permet d'afficher un LinearGradient (on ne peut le faire autrement comme en Web avec du CSS)
-                    colors={['rgba(255,255,255,0.6)', 'transparent']}
-                    style={styles.gradient}
-                />
+                
                 {
                     (exposerID && authorID) ? // Si nous connaissons qui est l'autheur et l'exposer on afficher ceci
                     <Author  // Le composant Author prend comme parametre le authorID et l'exposer ID, il affiche ensuite le widget qui permet de voir qui à créer la publication
                         authorID={authorID}
                         exposerID={exposerID}
-                        style={{position: 'absolute', zIndex: 4, margin: 10}}
+                        style={{position: 'absolute', margin: 10, zIndex: 4}}
                     /> :
                     <></>
                 }
+                <LinearGradient // Le composant LinearGradient permet d'afficher un LinearGradient (on ne peut le faire autrement comme en Web avec du CSS)
+                    colors={['rgba(255,255,255,0.6)', 'transparent']}
+                    style={styles.gradient}
+                />
                 
                 <LazyLoadingImage // Ce composant permet de charger les images de manière parralèle au restant de la page et affiche un 'skeleton' tant qu'elle n'est pas chargée
                     profilePictureUrl={imageURL}
@@ -101,28 +113,34 @@ const Post = ({title="No title", description, authorID, exposerID, imageID, post
                 }
                 color={Colors.light.pink}
             />
-            <PostInteractionButton  // Bouton pour commenter la publication
-                iconComponent={
-                    <Icon
-                        name='comments'
-                        type='font-awesome-5'
-                        size={20}
-                        color={'black'}
-                    />
-                }
-                color={Colors.light.tint}
-                hasCounter={true}
-            />
+            <PostNavigationButton postID={postID}>
+                <PostInteractionButton  // Bouton pour commenter la publication
+                    iconComponent={
+                        <Icon
+                            name='comments'
+                            type='font-awesome-5'
+                            size={20}
+                            color={'black'}
+                        />
+                    }
+                    color={Colors.light.tint}
+                    hasCounter={true}
+                    disabled={true}
+                />
+            </PostNavigationButton>
+            
             <PostRatingButton // Bouton pour metter une upvote ou downvote (liker / disliker)
                 color={Colors.light.yellow}
+                postID={postID}
             />
         </View>
-        
         </View>
-        </TouchableOpacity>
+        </PostNavigationButton>
         
     )
 }
+
+
 
 export default Post
 
@@ -159,6 +177,7 @@ const styles = StyleSheet.create({ // Les styles de la publication
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        margin: 10
+        margin: 10,
+        zIndex: 4
     }
 })

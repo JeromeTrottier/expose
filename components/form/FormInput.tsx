@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: 'black',
-        width: '80%',
+        flex: 1
     }, 
     inputIcon: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '20%',
+        marginHorizontal: 5
     }
 })

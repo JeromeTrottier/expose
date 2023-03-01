@@ -25,6 +25,7 @@ const FollowingFeedList = () => {
           authorID={item.authorID}
           exposerID={item.exposerID}
           imageID={item.imageID}
+          postID={item.postID}
         />
       }
       ListEmptyComponent={<><EmptyDataComponent/></>}

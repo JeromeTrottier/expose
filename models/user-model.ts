@@ -272,7 +272,7 @@ export const getUserFromDB = async (userID: string) => {
         }
         return exposeUserData;
     } else {
-        console.error("No user with this ID");
+        console.log("No user with this ID");
         return undefined;
     }
 }
@@ -364,6 +364,42 @@ export const getSubscribtionPosts = async (userID: string) => {
     return [];
 }
 
+export const hasUserAlreadyDownvotedPost = async (userID: string, postID: string) => { 
+    try {
+
+        const downvotedPostQuery = query(collection(bdFirestore, "users", userID, "postsDownvoted"), where("downvotedPostID", "==", postID));
+
+        const downvotedPostSnapshot = await getDocs(downvotedPostQuery);
+        if (downvotedPostSnapshot.size === 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    } catch (e: any) {
+        console.warn(e);   
+    }
+
+}
+
+export const hasUserAlreadyUpvotedPost = async (userID: string, postID: string) => { 
+    try {
+        const upvotedPostQuery = query(collection(bdFirestore, "users", userID, "postsUpvoted"), where("upvotedPostID", "==", postID));
+        const upvotedPostSnapshot = await getDocs(upvotedPostQuery);
+
+        
+        if (upvotedPostSnapshot.size === 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    } catch (e: any) {
+        console.warn(e);   
+    }
+}
+
+
 const getUsersFollowedIDs = async (userID: string) => {
     try {
         const querySnapshot = await getDocs(collection(bdFirestore, "users", userID, "usersFollowed"));
@@ -379,6 +415,7 @@ const getUsersFollowedIDs = async (userID: string) => {
         console.warn(e);   
     }
 }
+
 
 const sortByTimestamp = (array: DBExposePost[]) => {
     return array.sort(function(x: DBExposePost, y: DBExposePost){

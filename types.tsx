@@ -51,15 +51,19 @@ export type SearchTabScreenProps = BottomTabScreenProps<RootTabParamList, 'Searc
 //Home Stack 
 export type HomeStackParamList = {
     Home: undefined;
-    Profile: {userID: string}
+    Profile: {userID: string};
+    Post: {postID: string};
 }
 
 export type HomeScreenProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
+export type PostScreenProps = NativeStackScreenProps<HomeStackParamList, 'Post'>;
+
 //Feed Stack
 export type FollowingFeedStackParamList = {
-    FollowingFeed: undefined,
-    Profile: {userID: string}
+    FollowingFeed: undefined;
+    Profile: {userID: string};
+    Post: {postID: string};
 }
  
 export type FollowingFeedScreenProps = NativeStackScreenProps<FollowingFeedStackParamList, 'FollowingFeed'>;
@@ -68,6 +72,7 @@ export type FollowingFeedScreenProps = NativeStackScreenProps<FollowingFeedStack
 export type SearchStackParamList = {
     Search: undefined;
     Profile: {userID: string};
+    Post: {postID: string};
 }
 
 export type SearchScreenProps = NativeStackScreenProps<SearchStackParamList, 'Search'>;
@@ -75,6 +80,7 @@ export type SearchScreenProps = NativeStackScreenProps<SearchStackParamList, 'Se
 //Profile Stack
 export type ProfileStackParamList = {
     Profile: {userID: string};
+    Post: {postID: string};
 }
 
 // Users
@@ -115,6 +121,11 @@ export type ExposeUserStats = {
     followers: number;
     posts: number;
     exposes: number;
+}
+
+export type ExposePostStats={
+    upvotes: number;
+    downvotes: number;
 }
 
 export type TabType = "Home" | "FollowindFeed" | "Search" | "Profile"; 

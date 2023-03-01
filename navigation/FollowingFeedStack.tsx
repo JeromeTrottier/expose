@@ -6,6 +6,7 @@ import { FollowingFeedStackParamList } from '../types'
 import FollowingFeedScreen from '../screens/FollowingFeedScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import Colors from '../constants/Colors'
+import PostScreen from '../screens/PostScreen'
 
 const Stack = createStackNavigator<FollowingFeedStackParamList>()
 
@@ -30,6 +31,7 @@ const FollowingFeedStack = () => {
         >
             <Stack.Screen name='FollowingFeed' component={FollowingFeedScreen} />
             <Stack.Screen name='Profile' component={ProfileScreen} />
+            <Stack.Screen name='Post' component={PostScreen} />
         </Stack.Navigator>
     </TabContext.Provider>
   )

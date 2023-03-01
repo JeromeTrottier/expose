@@ -6,6 +6,7 @@ import SearchScreen from '../screens/SearchScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import Colors from '../constants/Colors';
 import { TabContext } from '../contexts/tabContext';
+import PostScreen from '../screens/PostScreen';
 
 const Stack = createStackNavigator<SearchStackParamList>();
 
@@ -24,6 +25,7 @@ const SearchStack = () => {
       >
           <Stack.Screen name='Search' component={SearchScreen} options={{headerShown: false}}/>
           <Stack.Screen name='Profile' component={ProfileScreen}/>
+          <Stack.Screen name='Post' component={PostScreen} />
       </Stack.Navigator>
     </TabContext.Provider>
     

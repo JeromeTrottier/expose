@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getUserFromDB } from "../models/user-model";
 import { DBExposeUser } from "../types";
 
-export default function useDBUser(userID: string) {
+export default function useDBUser(userID: string | undefined) {
     const [DBUser, setDBUser] = useState<DBExposeUser>({
         displayName: '',
         username: '',
@@ -13,8 +13,8 @@ export default function useDBUser(userID: string) {
 
     useEffect(() => {
 
-        const func = async () => {
-            const user = await getUserFromDB(userID);
+        const func = async (id: string) => {
+            const user = await getUserFromDB(id);
             if (user != undefined) {
                 setDBUser({
                     displayName: user.displayName,
@@ -24,8 +24,9 @@ export default function useDBUser(userID: string) {
                 });
             } 
         }
-
-        func();
+        if (userID) {
+            func(userID);
+        }
     }, []);
 
     return DBUser;

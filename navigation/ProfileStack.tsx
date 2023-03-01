@@ -5,6 +5,7 @@ import { ProfileStackParamList, ProfileTabScreenProps } from '../types';
 import { TabContext } from '../contexts/tabContext';
 import ProfileScreen from '../screens/ProfileScreen';
 import Colors from '../constants/Colors';
+import PostScreen from '../screens/PostScreen';
 
 const Stack = createStackNavigator<ProfileStackParamList>();
 
@@ -28,6 +29,7 @@ const ProfileStack = ({navigation, route}: ProfileTabScreenProps) => {
               }}
         >
             <Stack.Screen name='Profile' component={ProfileScreen} initialParams={{userID: route.params.userID}}/>
+            <Stack.Screen name='Post' component={PostScreen} />
         </Stack.Navigator>
     </TabContext.Provider>
   )

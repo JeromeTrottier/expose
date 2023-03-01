@@ -27,6 +27,7 @@ const ExposesList = ({userID, headerComponent}: ExposesListProps ) => {
                     authorID={item.authorID}
                     exposerID={item.exposerID}
                     imageID={item.imageID}
+                    postID={item.postID}
                 />
             }
             ListEmptyComponent={<><EmptyDataComponent/></>}
