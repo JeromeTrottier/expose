@@ -4,6 +4,7 @@ import { FlatList, RefreshControl } from 'react-native-gesture-handler'
 import usePosts from '../hooks/usePosts';
 import Post from './Post';
 import useRefresh from '../hooks/useRefresh';
+import LoadingList from './LoadingList';
 
 type HomePostsListProps = {
     headerComponent?: React.ReactNode;
@@ -35,18 +36,12 @@ const HomePostsList = ({headerComponent}: HomePostsListProps) => {
                     postID={item.postID}
                 />
             }
-            ListEmptyComponent={<><EmptyDataComponent/></>}
+            ListEmptyComponent={<><LoadingList/></>}
             refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
             ItemSeparatorComponent={() => <View style={{height: 10}} />}
         />
-    )
-}
-
-const EmptyDataComponent = () => {
-    return (
-        <Text>Pas encore de posts...</Text>
     )
 }
 

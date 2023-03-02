@@ -12,12 +12,15 @@ import Colors from '../constants/Colors';
 import Author from '../components/Author';
 import Comment from '../components/Comment';
 import CommentList from '../components/CommentList';
+import useComments from '../hooks/useComments';
 
 const PostScreen = ({route, navigation}: PostScreenProps) => {
 
   const postData = usePost(route.params.postID);
 
   const postImageURL = usePostImage(postData?.imageID);
+
+  const comments = useComments(route.params.postID);
   
 
   if (postData) {
@@ -64,6 +67,7 @@ const PostScreen = ({route, navigation}: PostScreenProps) => {
               }
               color={Colors.light.tint}
               hasCounter={true}
+              counter={comments?.length}
           />
           <PostRatingButton // Bouton pour metter une upvote ou downvote (liker / disliker)
               color={Colors.light.yellow}

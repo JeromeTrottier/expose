@@ -1,6 +1,6 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { bdFirestore } from "../firebase";
-import { DBExposePost, ExposePostStats } from "../types";
+import { DBExposePost, ExposePostComment, ExposePostStats } from "../types";
 
 export const getPostByID = async (postID: string): Promise<DBExposePost| undefined> => {
     try {
@@ -128,5 +128,44 @@ export const getPostRatings = async (postID: string): Promise<ExposePostStats> =
     return {
         upvotes: usersWhoUpvotedSnapshot.size,
         downvotes: usersWhoDownvotedSnapshot.size
+    }
+}
+
+export const postComment = async (postID: string, comment: ExposePostComment) => {
+    try {
+        await addDoc(
+            collection(bdFirestore, 'posts', postID, 'comments'),
+            {   
+                text: comment.text,
+                authorID: comment.authorID
+            }
+        )
+    } catch (e: any) {
+        console.log(e);
+    }
+}
+
+export const getCommentsFromPost = async (postID: string) => {
+    try {
+
+        const commentsRef = collection(bdFirestore, "posts", postID, "comments");
+
+        const commentsSnapshot = await getDocs(commentsRef);
+
+        const comments: ExposePostComment[] = [];
+
+        commentsSnapshot.forEach((comment) => {
+            const commentData = comment.data();
+            comments.push({
+                text: commentData.text,
+                authorID: commentData.authorID
+            })
+        })
+
+        return comments;
+
+    } catch (e: any) {
+        console.log(e);
+        
     }
 }
