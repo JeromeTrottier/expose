@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getSubscribtionPosts } from "../models/user-model";
 import { DBExposePost } from "../types";
 
-export default function useSubscribtionFeedPosts(userID: string) {
+export default function useSubscribtionFeedPosts(refreshing: boolean, userID: string) {
 
     const [posts, setPosts] = useState<Array<DBExposePost>>([]);
 
@@ -14,7 +14,7 @@ export default function useSubscribtionFeedPosts(userID: string) {
         }
 
         getPosts();
-    }, []);
+    }, [refreshing]);
 
     return posts;
 

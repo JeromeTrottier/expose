@@ -1,18 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useContext } from 'react'
-import { FlatList } from 'react-native-gesture-handler'
-import { Skeleton } from '@rneui/themed'
-import { windowWidth } from '../utils/Dimensions'
+import { FlatList, RefreshControl } from 'react-native-gesture-handler'
 import useSubscribtionFeedPosts from '../hooks/useSubscribtionFeedPosts'
 import { UserContext } from '../contexts/userContext'
 import Post from './Post'
 import LoadingList from './LoadingList'
+import useRefresh from '../hooks/useRefresh'
 
 const FollowingFeedList = () => {
 
   const user = useContext(UserContext);
 
-  const posts = useSubscribtionFeedPosts(user?.user.uid);
+  const {refreshing, onRefresh} = useRefresh();
+
+  const posts = useSubscribtionFeedPosts(refreshing, user?.user.uid);
 
   return (
     <FlatList
@@ -31,6 +32,9 @@ const FollowingFeedList = () => {
       }
       ListEmptyComponent={<><LoadingList/></>}
       ItemSeparatorComponent={() => <View style={{height: 10}} />}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     />
   )
 }
