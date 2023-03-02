@@ -128,4 +128,9 @@ export type ExposePostStats={
     downvotes: number;
 }
 
+export type ExposePostComment = {
+    text: string;
+    authorID: string;
+}
+
 export type TabType = "Home" | "FollowindFeed" | "Search" | "Profile"; 

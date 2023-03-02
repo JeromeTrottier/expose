@@ -6,6 +6,7 @@ import { windowWidth } from '../utils/Dimensions'
 import useSubscribtionFeedPosts from '../hooks/useSubscribtionFeedPosts'
 import { UserContext } from '../contexts/userContext'
 import Post from './Post'
+import LoadingList from './LoadingList'
 
 const FollowingFeedList = () => {
 
@@ -28,18 +29,9 @@ const FollowingFeedList = () => {
           postID={item.postID}
         />
       }
-      ListEmptyComponent={<><EmptyDataComponent/></>}
+      ListEmptyComponent={<><LoadingList/></>}
       ItemSeparatorComponent={() => <View style={{height: 10}} />}
     />
-  )
-}
-
-const EmptyDataComponent = () => {
-  return (
-    <View>
-      {[1, 2, 3].map((item) => <Skeleton key={item} style={{marginHorizontal: 20, marginVertical: 10, borderRadius: 10}} width={windowWidth - 40} height={275}/>)}
-    </View>
-    
   )
 }
 

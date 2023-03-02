@@ -16,6 +16,7 @@ import { FollowingFeedStackParamList, HomeStackParamList, ProfileStackParamList,
 import { PostNavigationButton } from './PostNavigationButton';
 import { downvotePost, upvotePost } from '../models/post-model';
 import { UserContext } from '../contexts/userContext';
+import useComments from '../hooks/useComments';
 
 // Type custom des props passé à chacunes des publications de l'application
 
@@ -33,6 +34,8 @@ const Post = ({title="No title", description, authorID, exposerID, imageID, post
     const imageURL = usePostImage(imageID); // usePostImage est un hook qui prend en paramètre le ID de l'image et qui retourne son URL
 
     const [isImagePost, setIsImagePost] = useState(false); // Déclaration du l'état si la publication contient une image ou pas
+
+    const comments = useComments(postID);
 
     useEffect(() => { // le hook useEffect effectue la fonction qu'on lui passe une seule fois si le dependency array est vide (le deuxieme argument du hook)
         if (title === "Pas de titre" && description === '') { // Verifier si la publication contient seulement une image, si oui on set isImagePost à true
@@ -126,6 +129,7 @@ const Post = ({title="No title", description, authorID, exposerID, imageID, post
                     color={Colors.light.tint}
                     hasCounter={true}
                     disabled={true}
+                    counter={comments?.length}
                 />
             </PostNavigationButton>
             
