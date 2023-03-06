@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { FlatList, RefreshControl } from 'react-native-gesture-handler'
 import useSubscribtionFeedPosts from '../hooks/useSubscribtionFeedPosts'
 import { UserContext } from '../contexts/userContext'
-import Post from './Post'
+import Post from './posts/Post'
 import LoadingList from './LoadingList'
 import useRefresh from '../hooks/useRefresh'
 

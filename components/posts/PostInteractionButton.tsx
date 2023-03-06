@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacityProps, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacityProps } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 

@@ -2,8 +2,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useContext } from "react";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
-import { TabContext } from "../contexts/tabContext";
-import { FollowingFeedStackParamList, HomeStackParamList, ProfileStackParamList, SearchStackParamList } from "../types";
+import { TabContext } from "../../contexts/tabContext";
+import { FollowingFeedStackParamList, HomeStackParamList, ProfileStackParamList, SearchStackParamList } from "../../types";
 
 export const PostNavigationButton = ({children, postID, ...rest}: {children: JSX.Element[] | JSX.Element, postID: string} & TouchableOpacityProps) => {
     

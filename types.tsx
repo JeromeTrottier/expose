@@ -44,7 +44,6 @@ export type ProfileScreenProps = CompositeScreenProps<
         NativeStackScreenProps<SearchStackParamList, 'Profile'>,
         NativeStackScreenProps<HomeStackParamList, 'Profile'>
     >
-    
 >;
 export type SearchTabScreenProps = BottomTabScreenProps<RootTabParamList, 'SearchStack'>;
 

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import UserProfileInfoItem from './UserProfileInfoItem';
-import useUserStats from '../hooks/useUserStats';
+import UserProfileInfoItem from '../UserProfileInfoItem';
+import useUserStats from '../../hooks/useUserStats';
 
 type UserProfileInfoProps = {
   userID: string

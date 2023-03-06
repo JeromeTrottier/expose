@@ -2,11 +2,11 @@ import { GestureResponderEvent, StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
-import { UserContext } from '../contexts/userContext';
-import { downvotePost, undoDownvotePost, undoUpvotePost, upvotePost } from '../models/post-model';
-import usePostRatings from '../hooks/usePostRatings';
-import { hasUserAlreadyDownvotedPost, hasUserAlreadyUpvotedPost } from '../models/user-model';
-import Colors from '../constants/Colors';
+import { UserContext } from '../../contexts/userContext';
+import { downvotePost, undoDownvotePost, undoUpvotePost, upvotePost } from '../../models/post-model';
+import usePostRatings from '../../hooks/usePostRatings';
+import { hasUserAlreadyDownvotedPost, hasUserAlreadyUpvotedPost } from '../../models/user-model';
+import Colors from '../../constants/Colors';
 
 interface PostRatingButtonProps {
     color?: string;

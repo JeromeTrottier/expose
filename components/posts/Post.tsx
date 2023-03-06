@@ -1,22 +1,15 @@
-import { StyleSheet, Text, TouchableOpacityProps, View } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Author from './Author';
-import LazyLoadingImage from './LazyLoadingImage';
+import LazyLoadingImage from '../LazyLoadingImage';
 import {LinearGradient} from 'expo-linear-gradient';
 import PostInteractionButton from './PostInteractionButton';
 import { Icon } from '@rneui/themed';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 import PostRatingButton from './PostRatingButton';
-import usePostImage from '../hooks/usePostImage'
-import { TouchableOpacity } from 'react-native';
-import { TabContext } from '../contexts/tabContext';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { FollowingFeedStackParamList, HomeStackParamList, ProfileStackParamList, SearchStackParamList } from '../types';
+import usePostImage from '../../hooks/usePostImage'
 import { PostNavigationButton } from './PostNavigationButton';
-import { downvotePost, upvotePost } from '../models/post-model';
-import { UserContext } from '../contexts/userContext';
-import useComments from '../hooks/useComments';
+import useComments from '../../hooks/useComments';
 
 // Type custom des props passé à chacunes des publications de l'application
 

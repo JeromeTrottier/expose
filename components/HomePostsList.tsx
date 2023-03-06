@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { FlatList, RefreshControl } from 'react-native-gesture-handler'
 import usePosts from '../hooks/usePosts';
-import Post from './Post';
+import Post from './posts/Post';
 import useRefresh from '../hooks/useRefresh';
 import LoadingList from './LoadingList';
 
