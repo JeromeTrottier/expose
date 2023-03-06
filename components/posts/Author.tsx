@@ -1,12 +1,12 @@
 import { StyleSheet, Text, TouchableOpacityProps, View, ViewProps } from 'react-native'
 import React, { useContext } from 'react'
-import useDBUser from '../hooks/useDBUser';
-import LazyLoadingImage from './LazyLoadingImage';
-import useProfilePicture from '../hooks/useProfilePicture';
+import useDBUser from '../../hooks/useDBUser';
+import LazyLoadingImage from '../LazyLoadingImage';
+import useProfilePicture from '../../hooks/useProfilePicture';
 import { TouchableOpacity } from 'react-native';
-import { TabContext } from '../contexts/tabContext';
+import { TabContext } from '../../contexts/tabContext';
 import { useNavigation } from '@react-navigation/native';
-import { FollowingFeedStackParamList, HomeStackParamList, ProfileStackParamList, SearchStackParamList } from '../types';
+import { FollowingFeedStackParamList, HomeStackParamList, ProfileStackParamList, SearchStackParamList } from '../../types';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type AuthorProps = {

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { FlatList, RefreshControl } from 'react-native-gesture-handler'
-import Post from './Post'
+import Post from './posts/Post'
 import useExposes from '../hooks/useExposes'
 import useRefresh from '../hooks/useRefresh'
 

@@ -5,13 +5,13 @@ import usePost from '../hooks/usePost';
 import LazyLoadingImage from '../components/LazyLoadingImage';
 import usePostImage from '../hooks/usePostImage';
 import { windowWidth } from '../utils/Dimensions';
-import PostInteractionButton from '../components/PostInteractionButton';
-import PostRatingButton from '../components/PostRatingButton';
+import PostInteractionButton from '../components/posts/PostInteractionButton';
+import PostRatingButton from '../components/posts/PostRatingButton';
 import { Icon } from '@rneui/base';
 import Colors from '../constants/Colors';
-import Author from '../components/Author';
-import Comment from '../components/Comment';
-import CommentList from '../components/CommentList';
+import Author from '../components/posts/Author';
+import Comment from '../components/posts/Comment';
+import CommentList from '../components/posts/CommentList';
 import useComments from '../hooks/useComments';
 
 const PostScreen = ({route, navigation}: PostScreenProps) => {

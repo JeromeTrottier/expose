@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useState } from 'react'
 import Comment from './Comment'
-import Colors from '../constants/Colors'
-import FormInput from './form/FormInput'
+import Colors from '../../constants/Colors'
+import FormInput from '../form/FormInput'
 import { Icon } from '@rneui/themed'
-import IconButton from './IconButton'
-import useComments from '../hooks/useComments'
-import { postComment } from '../models/post-model'
-import { UserContext } from '../contexts/userContext'
+import IconButton from '../IconButton'
+import useComments from '../../hooks/useComments'
+import { postComment } from '../../models/post-model'
+import { UserContext } from '../../contexts/userContext'
 
 interface CommentListProps {
     postID: string
