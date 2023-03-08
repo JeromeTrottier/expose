@@ -23,8 +23,7 @@ const ProfileScreen = ({route, navigation}: ProfileScreenProps) => {
     const mainNav = useNavigation<MainNavigationProps>();
     
     if (user?.user.uid === route.params.userID || route.params.userID === undefined) {
-        
-        const profilePictureUrl = useProfilePicture(user?.userData._z.profilePictureID);
+        const profilePictureUrl = useProfilePicture(user?.userData.profilePictureID);
 
         return (
             <View style={styles.container}>

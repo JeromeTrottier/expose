@@ -19,7 +19,7 @@ type PostProps = {
     authorID?: string; // Le ID de l'utilisateur sur lequel on publie la publication
     exposerID?: string; // Le ID de l'utilisateur qui publie la publication (l'exposer)
     imageID?: string; // Le ID de l'image (s'il y en a une) de la publication
-    postID: string
+    postID: string; // Le ID du post
 }
 
 const Post = ({title="No title", description, authorID, exposerID, imageID, postID}: PostProps) => { // Déclaration de composant avec ses paramètres
@@ -28,17 +28,13 @@ const Post = ({title="No title", description, authorID, exposerID, imageID, post
 
     const [isImagePost, setIsImagePost] = useState(false); // Déclaration du l'état si la publication contient une image ou pas
 
-    const comments = useComments(postID);
+    const comments = useComments(postID); // Hook qui va chercher tous les commentaires sur le post
 
     useEffect(() => { // le hook useEffect effectue la fonction qu'on lui passe une seule fois si le dependency array est vide (le deuxieme argument du hook)
         if (title === "Pas de titre" && description === '') { // Verifier si la publication contient seulement une image, si oui on set isImagePost à true
             setIsImagePost(true); 
         }
     }, [])
-
-    
-
-    
 
     return (
         <PostNavigationButton postID={postID}>
@@ -87,7 +83,7 @@ const Post = ({title="No title", description, authorID, exposerID, imageID, post
             <> 
                 <Text style={styles.title}>{title}</Text>
                 {
-                    (description !== '') ?
+                    (description !== '') ? // Si il y a une description, l'afficher
                     <Text style={styles.description}>{description}</Text>
                     :
                     <></>
@@ -96,48 +92,46 @@ const Post = ({title="No title", description, authorID, exposerID, imageID, post
 
         } 
 
-        {/* Ici, on affiche les boutons d'interaction de la publication */}
-        <View style={[styles.postBottom, isImagePost ? {position: 'absolute', right: 0, bottom: 0} : {}]}> 
-            <PostInteractionButton  // Bouton pour partager la publication
-                iconComponent={
-                    <Icon
-                        name='share'
-                        type='font-awesome-5'
-                        size={23}
-                        color={'black'}
-                    />
-                }
-                color={Colors.light.pink}
-            />
-            <PostNavigationButton postID={postID}>
-                <PostInteractionButton  // Bouton pour commenter la publication
+            {/* Ici, on affiche les boutons d'interaction de la publication */}
+            <View style={[styles.postBottom, isImagePost ? {position: 'absolute', right: 0, bottom: 0} : {}]}> 
+                <PostInteractionButton  // Bouton pour partager la publication
                     iconComponent={
                         <Icon
-                            name='comments'
+                            name='share'
                             type='font-awesome-5'
-                            size={20}
+                            size={23}
                             color={'black'}
                         />
                     }
-                    color={Colors.light.tint}
-                    hasCounter={true}
-                    disabled={true}
-                    counter={comments?.length}
+                    color={Colors.light.pink}
                 />
-            </PostNavigationButton>
-            
-            <PostRatingButton // Bouton pour metter une upvote ou downvote (liker / disliker)
-                color={Colors.light.yellow}
-                postID={postID}
-            />
+                <PostNavigationButton postID={postID}>
+                    <PostInteractionButton  // Bouton pour commenter la publication
+                        iconComponent={
+                            <Icon
+                                name='comments'
+                                type='font-awesome-5'
+                                size={20}
+                                color={'black'}
+                            />
+                        }
+                        color={Colors.light.tint}
+                        hasCounter={true}
+                        disabled={true}
+                        counter={comments?.length}
+                    />
+                </PostNavigationButton>
+                
+                <PostRatingButton // Bouton pour metter une upvote ou downvote (liker / disliker)
+                    color={Colors.light.yellow}
+                    postID={postID}
+                />
+            </View>
         </View>
-        </View>
-        </PostNavigationButton>
+    </PostNavigationButton>
         
     )
 }
-
-
 
 export default Post
 

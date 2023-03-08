@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Expose",
-    "slug": "Expose",
+    "slug": "expose",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/exposeAppIcon.png",
@@ -19,14 +19,27 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "expose"
+      "bundleIdentifier": "expose",
+      "infoPlist": {
+        "SKAdNetworkItems": [
+          {
+            "SKAdNetworkIdentifier": "v9wttpbfk9.skadnetwork"
+          },
+          {
+            "SKAdNetworkIdentifier": "n38lu8286q.skadnetwork"
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.expose.Expose"
+      "package": "com.expose.Expose",
+      "permissions": [
+        "android.permission.INTERNET"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -40,6 +53,12 @@
           "displayName": "expose"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a5293ded-f147-4fa5-be00-303f43ede8e3"
+      }
+    },
+    "owner": "fonomik"
   }
 }

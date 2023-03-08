@@ -9,7 +9,6 @@ import TextSeparation from '../components/form/TextSeparation'
 import SocialButton from '../components/form/SocialButton'
 import { createAccountWithLoginInformation, signInWithFacebook } from '../models/user-model'
 import { ExposeUser } from '../types'
-import Subtitle from '../components/Subtitle'
 import ImagePickerButton from '../components/form/ImagePickerButton'
 import { ScrollView } from 'react-native-gesture-handler'
 
@@ -22,6 +21,32 @@ const SignUpScreen = () => {
         password: '',
         profilePictureURI: ''
     });
+
+    const handleAccountCreation = () => {
+
+        if(newUserInfo.displayName === '') {
+            alert('Pas de nom entré')
+            return;
+        }
+        if(newUserInfo.username === '') {
+            alert('Pas de pseudonyme entré')
+            return;
+        }
+        if(newUserInfo.password === '') {
+            alert('Pas de mot de passe entré')
+            return;
+        }
+        if(newUserInfo.email === '') {
+            alert('Pas de email entré')
+            return;
+        }
+        if(newUserInfo.profilePictureURI === '') {
+            alert("Pas d'image de profil entrée")
+            return;
+        }
+
+        createAccountWithLoginInformation(newUserInfo);
+    }
 
     return (
         <ScrollView>
@@ -95,7 +120,7 @@ const SignUpScreen = () => {
         <FormButton
             title='Enregistrer'
             color={Colors.light.tint}
-            onPress={() => createAccountWithLoginInformation(newUserInfo)}
+            onPress={handleAccountCreation}
         />
         <TextSeparation 
                 label='OU'

@@ -55,6 +55,7 @@ const CommentList = ({postID}: CommentListProps) => {
             (comments && comments.length > 0) ? 
             comments?.map((comment) => 
                 <Comment
+                    key={comment.text+comment.authorID}
                     commenterID={comment.authorID}
                     commentText={comment.text}
                 />

@@ -5,6 +5,8 @@ import usePosts from '../hooks/usePosts';
 import Post from './posts/Post';
 import useRefresh from '../hooks/useRefresh';
 import LoadingList from './LoadingList';
+import TextButton from './form/TextButton';
+import Colors from '../constants/Colors';
 
 type HomePostsListProps = {
     headerComponent?: React.ReactNode;
@@ -24,11 +26,11 @@ const HomePostsList = ({headerComponent}: HomePostsListProps) => {
     return (
         <FlatList
             ListHeaderComponent={<>{headerComponent? headerComponent : <></>}</>}
-            ListFooterComponent={<Button title='Voir plus...' onPress={handleViewMorePosts}/>}
+            ListFooterComponent={<TextButton title='Voir plus...' onPress={handleViewMorePosts} color={Colors.light.tint} />}
             data={posts}
             renderItem={({item}) => 
                 <Post 
-                    title={item.title} 
+                    title={item.title}  
                     description={item.description}
                     authorID={item.authorID}
                     exposerID={item.exposerID}

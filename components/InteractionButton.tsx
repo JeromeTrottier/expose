@@ -5,9 +5,10 @@ type InteractionButtonProps = {
   label: string;
   margin?: number;
   fillRemainingSpace?: boolean;
+  color?: string;
 }
 
-const InteractionButton = ({label, margin=5, fillRemainingSpace=false, ...rest}: InteractionButtonProps & TouchableOpacityProps) => {
+const InteractionButton = ({label, margin=5, fillRemainingSpace=false, color, ...rest}: InteractionButtonProps & TouchableOpacityProps) => {
 
   return (
     <TouchableOpacity 
@@ -15,11 +16,11 @@ const InteractionButton = ({label, margin=5, fillRemainingSpace=false, ...rest}:
         styles.container, 
         { marginRight: margin },
         fillRemainingSpace ? 
-        {
-          flex: 1
-        } :
+        { flex: 1 } :
+        {},
+        color ? 
+        { backgroundColor: color} :
         {}
-
       ]}
       {...rest}
     >

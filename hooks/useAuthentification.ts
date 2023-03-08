@@ -8,10 +8,15 @@ export default function useAuthentification(userModulator: React.Dispatch<React.
     const firebaseAuth: Auth = getAuth(firebaseApp);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+        const unsubscribe = onAuthStateChanged(firebaseAuth, async (user) => {
             if (user) {
-                const userData = getUserFromDB(user.uid);
-                userModulator({userData, user});
+                const userData = await getUserFromDB(user.uid);
+                console.log("Data : ", userData);
+                if (userData !== undefined) {
+                    userModulator({userData, user});
+                } else {
+                    userModulator(undefined);
+                }
             } else {
                 console.log("Pas connecté");
                 userModulator(undefined);
