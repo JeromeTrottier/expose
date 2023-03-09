@@ -10,7 +10,6 @@ import PostRatingButton from '../components/posts/PostRatingButton';
 import { Icon } from '@rneui/base';
 import Colors from '../constants/Colors';
 import Author from '../components/posts/Author';
-import Comment from '../components/posts/Comment';
 import CommentList from '../components/posts/CommentList';
 import useComments from '../hooks/useComments';
 

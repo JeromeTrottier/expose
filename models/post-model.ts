@@ -145,24 +145,24 @@ export const postComment = async (postID: string, comment: ExposePostComment) =>
     }
 }
 
-export const getCommentsFromPost = async (postID: string) => {
-    try {
+export const getCommentsFromPost = async (postID: string) => { // Fonction qui va chercher les commentaires de la base de données
+    try { 
 
-        const commentsRef = collection(bdFirestore, "posts", postID, "comments");
+        const commentsRef = collection(bdFirestore, "posts", postID, "comments"); // Créer une référence au chemin des commentaires
 
-        const commentsSnapshot = await getDocs(commentsRef);
+        const commentsSnapshot = await getDocs(commentsRef); // Aller chercher les données des commentaires
 
-        const comments: ExposePostComment[] = [];
+        const comments: ExposePostComment[] = []; // Initialiser un array qui va contenir tous les commentaires
 
-        commentsSnapshot.forEach((comment) => {
-            const commentData = comment.data();
+        commentsSnapshot.forEach((comment) => { // Pour chaque commentaire, push un nouveau commentaire
+            const commentData = comment.data(); // 
             comments.push({
                 text: commentData.text,
                 authorID: commentData.authorID
             })
         })
 
-        return comments;
+        return comments; // Retourner le array de commentaires
 
     } catch (e: any) {
         console.log(e);

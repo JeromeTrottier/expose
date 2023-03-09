@@ -65,10 +65,10 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
                 color={Colors.light.tint}
                 onPress={() => signInWithLoginInformation(email, password, setError)}
             />
-            <TextButton
+            {/* <TextButton
                 title='Mot de passe oublié?'
                 color={Colors.light.tint}
-            />
+            /> */}
             <TextSeparation 
                 label='OU'
             />

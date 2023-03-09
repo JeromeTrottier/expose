@@ -24,17 +24,17 @@ import SearchStack from './SearchStack';
 import FollowingFeedStack from './FollowingFeedStack';
 import ProfileStack from './ProfileStack';
 
-const TabStack = createBottomTabNavigator<RootTabParamList>();
-const RootStack = createStackNavigator<RootParamList>();
+const TabStack = createBottomTabNavigator<RootTabParamList>(); // Tabs de l'application
+const RootStack = createStackNavigator<RootParamList>(); //Root de l'application
 
 type NavigationProps = StackNavigationProp<RootParamList>;
 
 const AppStack = () => {
 
-  const nav = useNavigation<NavigationProps>();
+  const nav = useNavigation<NavigationProps>(); // Permet d'avoir accès à la navigation de la racine de l'application
 
   return (
-    <RootStack.Navigator
+    <RootStack.Navigator // Racine de navigation
       screenOptions={{
         headerShown: true,
         title: 'Expose ',
@@ -52,15 +52,6 @@ const AppStack = () => {
         headerTitleAlign: 'left',
         headerRight: () => (
           <View style={{display: 'flex', flexDirection: 'row'}}>
-          <IconButton
-            iconComponent={
-              <Icon
-                name='settings'
-                type='feather'
-              />
-            }
-            onPress={() => nav.navigate('Settings')}
-          />
           <IconButton
             iconComponent={
               <Icon

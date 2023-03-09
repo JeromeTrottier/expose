@@ -14,6 +14,9 @@ const Routes = () => {
 
   const auth = useAuthentification(setUserData);
 
+  console.log(userData);
+  
+
   const ExposeTheme = {
     ...DefaultTheme,
     colors: {

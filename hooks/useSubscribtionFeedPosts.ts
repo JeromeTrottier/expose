@@ -8,12 +8,17 @@ export default function useSubscribtionFeedPosts(refreshing: boolean, userID: st
 
     useEffect(() => {
 
-        const getPosts = async () => {
-            const exposes = await getSubscribtionPosts(userID);
-            setPosts(exposes);
+        if (!refreshing) {
+            const getPosts = async () => {
+                const exposes = await getSubscribtionPosts(userID);
+                setPosts(exposes);
+            }
+    
+            getPosts(); 
+        } else {
+            setPosts([]);
         }
-
-        getPosts();
+        
     }, [refreshing]);
 
     return posts;

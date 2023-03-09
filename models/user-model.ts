@@ -19,13 +19,14 @@ import {
     AccessToken,
 } from 'react-native-fbsdk-next'
 import { FirebaseError } from "firebase/app";
-import { addDoc, collection, deleteDoc, doc, DocumentData, getDoc, getDocs, limit, orderBy, query, setDoc, startAfter, where } from "firebase/firestore";
-import { DBExposeUser, ExposeUser, DBExposePost, ExposePostForm, ExposeUserStats } from "../types";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, setDoc, startAfter, where } from "firebase/firestore";
+import { DBExposeUser, ExposeUser, DBExposePost, ExposePostForm } from "../types";
 import { uploadImage } from "./image-model";
 import 'react-native-get-random-values';
 import { v4 as uuidv4} from "uuid";
 
 export const signInWithFacebook = async () => {
+
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
     if(result.isCancelled) {
         throw new Error('User cancelled login');
@@ -58,20 +59,20 @@ export const signInWithFacebook = async () => {
 }
 
 export const createAccountWithLoginInformation= async (exposeUser: ExposeUser) => {
-
     const firebaseAuth: Auth = getAuth(firebaseApp);
 
     const userCredentials: UserCredential = await createUserWithEmailAndPassword(firebaseAuth, exposeUser.email, exposeUser.password);
     const user = userCredentials.user;
-
-    createUserInDB(user, {
+    
+    await createUserInDB(user, {
         username: exposeUser.username,
         displayName: exposeUser.displayName,
         email: exposeUser.email,
         profilePictureID: exposeUser.profilePictureURI,
     });
-
     console.log('Created account with : ', user.email);
+
+    await updateCurrentUser(firebaseAuth, userCredentials.user);
 }
 
 export const signInWithLoginInformation = async (email: string, password: string, errorModulator?: React.Dispatch<React.SetStateAction<string>>) => {
@@ -107,7 +108,7 @@ export const signOutUser = async () => {
 export const createUserInDB = async (user: User, expoUser: DBExposeUser) => {
 
     const profilePictureID: string = uuidv4();
-
+    
     if (expoUser.profilePictureID) {
         await uploadImage(expoUser.profilePictureID, profilePictureID, 'profilePictures');
     }
